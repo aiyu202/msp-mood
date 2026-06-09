@@ -271,7 +271,7 @@ let teamRecords = [];
 
 function getTodayKey() {
   const d = new Date();
-  return d.getFullYear()+'/'+( d.getMonth()+1)+'/'+d.getDate();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
 function avatarColor(name) {
@@ -429,7 +429,7 @@ function renderBulletin(posts) {
 
 function renderLog() {
   const now = new Date();
-  const ym = now.getFullYear()+'/'+(now.getMonth()+1)+'/';
+  const ym = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
   const monthRecs = myRecords.filter(r => String(r.date).startsWith(ym));
   const statsEl = document.getElementById('stats-row');
 
@@ -447,7 +447,7 @@ function renderLog() {
     const daysInMonth = new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
     const bars = [];
     for (let d=1;d<=Math.min(daysInMonth,now.getDate());d++) {
-      const key=ym+String(d);
+      const key=ym+'-'+String(d).padStart(2,'0');
       bars.push({d, rec:monthRecs.find(r=>String(r.date)===key)});
     }
     document.getElementById('bar-chart').innerHTML = bars.map(({d,rec})=>{
