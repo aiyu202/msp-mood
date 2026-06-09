@@ -6,11 +6,10 @@
 <title>邁斯朋友心情日記</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #ffffff; --bg2: #f7f6f3; --bg3: #f1f0ec;
-    --text: #1a1a18; --text2: #5f5e5a; --text3: #999894;
-    --border: rgba(0,0,0,0.10); --border2: rgba(0,0,0,0.18);
+    --bg:#ffffff; --bg2:#f7f6f3; --bg3:#f1f0ec;
+    --text:#1a1a18; --text2:#5f5e5a; --text3:#999894;
+    --border:rgba(0,0,0,0.10); --border2:rgba(0,0,0,0.20);
     --p50:#EEEDFE; --p200:#AFA9EC; --p400:#7F77DD; --p600:#534AB7; --p800:#3C3489;
     --t50:#E1F5EE; --t200:#5DCAA5; --t400:#1D9E75; --t600:#0F6E56; --t800:#085041;
     --a50:#FAEEDA; --a200:#EF9F27; --a400:#BA7517; --a600:#854F0B;
@@ -20,144 +19,194 @@
     :root {
       --bg:#1c1c1a; --bg2:#252522; --bg3:#2e2e2b;
       --text:#f0efea; --text2:#b4b2a9; --text3:#6b6965;
-      --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.18);
+      --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.22);
       --p50:#26215C; --p200:#3C3489; --p400:#7F77DD; --p600:#AFA9EC; --p800:#CECBF6;
       --t50:#04342C; --t200:#085041; --t400:#1D9E75; --t600:#5DCAA5; --t800:#9FE1CB;
       --a50:#412402; --a200:#BA7517; --a400:#EF9F27; --a600:#FAC775;
     }
   }
-
   body {
-    background: var(--bg2); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', 'PingFang TC', sans-serif;
-    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-    padding: 24px 16px 48px;
+    background:var(--bg2); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Microsoft JhengHei','PingFang TC',sans-serif;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center;
+    padding:20px 16px 60px;
   }
+  .container { width:100%; max-width:480px; }
 
-  .container { width: 100%; max-width: 480px; }
-  .app-header { text-align: center; margin-bottom: 24px; }
-  .app-title { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
-  .app-sub { font-size: 13px; color: var(--text3); }
+  /* header */
+  .app-header { text-align:center; margin-bottom:20px; }
+  .app-title { font-size:20px; font-weight:500; margin-bottom:4px; }
+  .app-sub { font-size:13px; color:var(--text3); }
 
-  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px; }
+  /* nickname setup */
+  .setup-card {
+    background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg);
+    padding:28px 20px; text-align:center; margin-bottom:12px;
+  }
+  .setup-emoji { font-size:40px; margin-bottom:12px; }
+  .setup-title { font-size:15px; font-weight:500; margin-bottom:6px; }
+  .setup-sub { font-size:13px; color:var(--text2); margin-bottom:16px; }
+  .setup-input {
+    width:100%; background:var(--bg2); border:0.5px solid var(--border2);
+    border-radius:var(--radius-md); padding:10px 14px; font-size:15px;
+    color:var(--text); font-family:inherit; outline:none; text-align:center;
+    margin-bottom:12px;
+  }
+  .setup-input:focus { border-color:var(--p400); }
 
-  .tabs { display: flex; border-bottom: 0.5px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
+  /* card */
+  .card { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:20px; margin-bottom:12px; }
+
+  /* tabs */
+  .tabs { display:flex; border-bottom:0.5px solid var(--border); margin-bottom:20px; overflow-x:auto; gap:0; }
   .tab-btn {
-    background: none; border: none; border-bottom: 2px solid transparent;
-    padding: 8px 12px; font-size: 13px; cursor: pointer; color: var(--text2);
-    font-family: inherit; margin-bottom: -0.5px; white-space: nowrap;
+    background:none; border:none; border-bottom:2px solid transparent;
+    padding:8px 12px; font-size:13px; cursor:pointer; color:var(--text2);
+    font-family:inherit; margin-bottom:-0.5px; white-space:nowrap; flex-shrink:0;
   }
-  .tab-btn.active { border-bottom-color: var(--p400); color: var(--text); font-weight: 500; }
+  .tab-btn.active { border-bottom-color:var(--p400); color:var(--text); font-weight:500; }
 
-  .mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14px; }
-  .mood-btn {
-    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius-lg);
-    padding: 10px 6px; cursor: pointer; display: flex; flex-direction: column; align-items: center;
-    gap: 5px; font-family: inherit; transition: border-color 0.15s, background 0.15s;
+  .view { display:none; }
+  .view.active { display:block; }
+
+  /* fortune */
+  .fortune-wrap { text-align:center; padding:4px 0 8px; }
+  .fortune-jar {
+    width:80px; height:80px; border-radius:50%;
+    background:var(--t50); border:0.5px solid var(--t200);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 8px; font-size:36px; cursor:pointer;
+    transition:transform 0.15s; user-select:none;
   }
-  .mood-btn:hover { border-color: var(--border2); background: var(--bg); }
-  .mood-btn.selected { border: 2px solid var(--p200); background: var(--p50); }
-  .mood-emoji { font-size: 24px; line-height: 1; }
-  .mood-label { font-size: 11px; color: var(--text3); }
-  .mood-btn.selected .mood-label { color: var(--p600); }
+  .fortune-jar:hover { transform:scale(1.06); }
+  .fortune-jar:active { transform:scale(0.95); }
+  .fortune-jar.shaking { animation:shake 0.5s ease; }
+  @keyframes shake {
+    0%{transform:rotate(0deg) scale(1.05)} 20%{transform:rotate(-8deg) scale(1.08)}
+    40%{transform:rotate(8deg) scale(1.08)} 60%{transform:rotate(-5deg) scale(1.06)}
+    80%{transform:rotate(5deg) scale(1.05)} 100%{transform:rotate(0deg) scale(1)}
+  }
+  .fortune-hint { font-size:12px; color:var(--text3); margin-bottom:16px; }
+  .fortune-card {
+    background:var(--t50); border:0.5px solid var(--t200); border-radius:var(--radius-lg);
+    padding:18px 16px; margin-bottom:10px; text-align:left;
+    opacity:0; transform:translateY(8px); transition:opacity 0.4s,transform 0.4s;
+  }
+  .fortune-card.show { opacity:1; transform:translateY(0); }
+  .fortune-rank { display:inline-block; font-size:11px; font-weight:500; padding:2px 10px; border-radius:20px; margin-bottom:10px; }
+  .rank-best  { background:var(--a50); color:var(--a600); border:0.5px solid var(--a200); }
+  .rank-great { background:var(--t50); color:var(--t600); border:0.5px solid var(--t200); }
+  .rank-good  { background:var(--p50); color:var(--p600); border:0.5px solid var(--p200); }
+  .rank-ok    { background:var(--bg2); color:var(--text2); border:0.5px solid var(--border2); }
+  .rank-learn { background:var(--bg2); color:var(--text2); border:0.5px solid var(--border2); }
+  .fortune-main { font-size:15px; font-weight:500; color:var(--t800); margin-bottom:8px; line-height:1.5; }
+  .fortune-detail { font-size:13px; color:var(--text2); line-height:1.7; margin-bottom:10px; }
+  .fortune-advice { font-size:12px; color:var(--t600); background:var(--bg); border-radius:var(--radius-md); padding:8px 12px; border:0.5px solid var(--t200); }
+  .fortune-date-note { font-size:11px; color:var(--text3); text-align:right; margin-top:6px; }
+  .redraw-btn { width:100%; background:none; border:0.5px solid var(--border2); border-radius:var(--radius-md); padding:8px; font-size:13px; color:var(--text2); cursor:pointer; font-family:inherit; margin-top:4px; }
+  .redraw-btn:hover { background:var(--bg2); }
+
+  /* mood record */
+  .mood-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:14px; }
+  .mood-btn {
+    background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius-lg);
+    padding:10px 6px; cursor:pointer; display:flex; flex-direction:column;
+    align-items:center; gap:5px; font-family:inherit; transition:border-color 0.15s,background 0.15s;
+  }
+  .mood-btn:hover { border-color:var(--border2); background:var(--bg); }
+  .mood-btn.selected { border:2px solid var(--p200); background:var(--p50); }
+  .mood-emoji { font-size:24px; line-height:1; }
+  .mood-label { font-size:11px; color:var(--text3); }
+  .mood-btn.selected .mood-label { color:var(--p600); }
 
   .note-input {
-    width: 100%; background: var(--bg2); border: 0.5px solid var(--border);
-    border-radius: var(--radius-md); padding: 10px 12px; font-size: 13px;
-    color: var(--text); font-family: inherit; resize: none; outline: none;
+    width:100%; background:var(--bg2); border:0.5px solid var(--border);
+    border-radius:var(--radius-md); padding:10px 12px; font-size:13px;
+    color:var(--text); font-family:inherit; resize:none; outline:none;
   }
-  .note-input:focus { border-color: var(--border2); }
-  .note-input::placeholder { color: var(--text3); }
+  .note-input:focus { border-color:var(--border2); }
+  .note-input::placeholder { color:var(--text3); }
+
+  .public-toggle {
+    display:flex; align-items:center; gap:8px; margin-top:10px;
+    font-size:13px; color:var(--text2); cursor:pointer; user-select:none;
+  }
+  .toggle-box {
+    width:36px; height:20px; border-radius:10px; background:var(--border2);
+    position:relative; transition:background 0.2s; flex-shrink:0;
+  }
+  .toggle-box.on { background:var(--t400); }
+  .toggle-dot {
+    width:16px; height:16px; border-radius:50%; background:white;
+    position:absolute; top:2px; left:2px; transition:left 0.2s;
+  }
+  .toggle-box.on .toggle-dot { left:18px; }
 
   .save-btn {
-    width: 100%; margin-top: 12px; background: var(--p50); border: 0.5px solid var(--p200);
-    border-radius: var(--radius-md); padding: 10px; font-size: 14px; font-weight: 500;
-    color: var(--p800); cursor: pointer; font-family: inherit;
+    width:100%; margin-top:12px; background:var(--p50); border:0.5px solid var(--p200);
+    border-radius:var(--radius-md); padding:10px; font-size:14px; font-weight:500;
+    color:var(--p800); cursor:pointer; font-family:inherit;
   }
-  .save-btn:hover { background: var(--p200); }
-  .save-btn:active { transform: scale(0.98); }
-  .save-msg { font-size: 12px; color: var(--p600); text-align: center; min-height: 20px; margin-top: 8px; }
+  .save-btn:hover { background:var(--p200); }
+  .save-btn:active { transform:scale(0.98); }
+  .save-msg { font-size:12px; color:var(--p600); text-align:center; min-height:20px; margin-top:8px; }
 
-  .log-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
-  .log-row:last-child { border-bottom: none; }
-  .log-date { color: var(--text2); font-size: 12px; min-width: 60px; }
-  .log-emoji { font-size: 20px; }
-  .log-mood-lbl { font-size: 12px; color: var(--text2); min-width: 48px; }
-  .log-note { font-size: 12px; color: var(--text3); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .del-btn { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 16px; padding: 2px 6px; border-radius: 4px; font-family: inherit; }
-  .del-btn:hover { color: var(--text2); background: var(--bg2); }
+  /* team wall */
+  .team-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:0.5px solid var(--border); }
+  .team-row:last-child { border-bottom:none; }
+  .avatar { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:500; flex-shrink:0; }
+  .team-name { font-size:13px; font-weight:500; }
+  .team-note { font-size:12px; color:var(--text3); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:180px; }
+  .team-emoji-big { font-size:26px; flex-shrink:0; }
+  .team-time { font-size:11px; color:var(--text3); margin-left:auto; flex-shrink:0; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
-  .stat-card { background: var(--bg2); border-radius: var(--radius-md); padding: 12px 8px; text-align: center; }
-  .stat-num { font-size: 22px; font-weight: 500; }
-  .stat-lbl { font-size: 11px; color: var(--text3); margin-top: 3px; line-height: 1.4; }
+  /* bulletin */
+  .bulletin-post { padding:14px 0; border-bottom:0.5px solid var(--border); }
+  .bulletin-post:last-child { border-bottom:none; }
+  .bulletin-tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; background:var(--p50); color:var(--p600); border:0.5px solid var(--p200); margin-bottom:6px; }
+  .bulletin-title { font-size:14px; font-weight:500; margin-bottom:4px; }
+  .bulletin-content { font-size:13px; color:var(--text2); line-height:1.7; }
+  .bulletin-date { font-size:11px; color:var(--text3); margin-top:6px; }
 
-  .bar-chart-wrap { overflow-x: auto; }
-  .bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 100px; min-width: 100%; }
-  .bar-col { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 16px; }
-  .bar-emoji { font-size: 10px; height: 14px; text-align: center; }
-  .bar { width: 100%; border-radius: 3px 3px 0 0; min-height: 4px; }
-  .bar-day { font-size: 9px; color: var(--text3); margin-top: 3px; }
+  /* chart */
+  .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
+  .stat-card { background:var(--bg2); border-radius:var(--radius-md); padding:12px 8px; text-align:center; }
+  .stat-num { font-size:22px; font-weight:500; }
+  .stat-lbl { font-size:11px; color:var(--text3); margin-top:3px; line-height:1.4; }
+  .bar-chart-wrap { overflow-x:auto; }
+  .bar-chart { display:flex; align-items:flex-end; gap:4px; height:100px; min-width:100%; }
+  .bar-col { display:flex; flex-direction:column; align-items:center; flex:1; min-width:16px; }
+  .bar-emoji-sm { font-size:10px; height:14px; text-align:center; }
+  .bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
+  .bar-day { font-size:9px; color:var(--text3); margin-top:3px; }
 
-  .empty-hint { color: var(--text3); font-size: 13px; text-align: center; padding: 28px 0; }
-  .view { display: none; }
-  .view.active { display: block; }
+  /* log */
+  .log-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:0.5px solid var(--border); }
+  .log-row:last-child { border-bottom:none; }
+  .log-date { color:var(--text2); font-size:12px; min-width:60px; }
+  .log-emoji { font-size:20px; }
+  .log-mood-lbl { font-size:12px; color:var(--text2); min-width:48px; }
+  .log-note { font-size:12px; color:var(--text3); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .log-pub { font-size:10px; color:var(--t600); background:var(--t50); border-radius:4px; padding:1px 5px; flex-shrink:0; }
+  .del-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:16px; padding:2px 6px; border-radius:4px; font-family:inherit; }
+  .del-btn:hover { color:var(--text2); background:var(--bg2); }
 
-  /* 抽籤 */
-  .fortune-wrap { text-align: center; padding: 4px 0 8px; }
-  .fortune-jar {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: var(--t50); border: 0.5px solid var(--t200);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 8px; font-size: 36px; cursor: pointer;
-    transition: transform 0.15s; user-select: none;
+  /* misc */
+  .empty-hint { color:var(--text3); font-size:13px; text-align:center; padding:28px 0; }
+  .section-head { font-size:13px; font-weight:500; margin-bottom:12px; }
+  .loading-hint { color:var(--text3); font-size:12px; text-align:center; padding:16px 0; }
+  .nickname-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .nickname-tag { font-size:12px; color:var(--text2); background:var(--bg2); border:0.5px solid var(--border); border-radius:20px; padding:3px 10px; }
+  .change-nick-btn { font-size:12px; color:var(--text3); background:none; border:none; cursor:pointer; font-family:inherit; }
+  .change-nick-btn:hover { color:var(--text2); }
+  .hidden { display:none !important; }
+  .primary-btn {
+    width:100%; background:var(--p400); border:none; border-radius:var(--radius-md);
+    padding:11px; font-size:14px; font-weight:500; color:white;
+    cursor:pointer; font-family:inherit;
   }
-  .fortune-jar:hover { transform: scale(1.06); }
-  .fortune-jar:active { transform: scale(0.95); }
-  .fortune-jar.shaking { animation: shake 0.5s ease; }
-  @keyframes shake {
-    0%   { transform: rotate(0deg) scale(1.05); }
-    20%  { transform: rotate(-8deg) scale(1.08); }
-    40%  { transform: rotate(8deg) scale(1.08); }
-    60%  { transform: rotate(-5deg) scale(1.06); }
-    80%  { transform: rotate(5deg) scale(1.05); }
-    100% { transform: rotate(0deg) scale(1); }
-  }
-  .fortune-hint { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
-  .fortune-card {
-    background: var(--t50); border: 0.5px solid var(--t200);
-    border-radius: var(--radius-lg); padding: 18px 16px; margin-bottom: 10px;
-    text-align: left; opacity: 0; transform: translateY(8px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .fortune-card.show { opacity: 1; transform: translateY(0); }
-
-  .fortune-rank {
-    display: inline-block; font-size: 11px; font-weight: 500;
-    padding: 2px 10px; border-radius: 20px; margin-bottom: 10px;
-  }
-  .rank-best  { background: var(--a50); color: var(--a600); border: 0.5px solid var(--a200); }
-  .rank-great { background: var(--t50); color: var(--t600); border: 0.5px solid var(--t200); }
-  .rank-good  { background: var(--p50); color: var(--p600); border: 0.5px solid var(--p200); }
-  .rank-ok    { background: var(--bg2); color: var(--text2); border: 0.5px solid var(--border2); }
-  .rank-learn { background: var(--bg2); color: var(--text2); border: 0.5px solid var(--border2); }
-
-  .fortune-main { font-size: 15px; font-weight: 500; color: var(--t800); margin-bottom: 8px; line-height: 1.5; }
-  .fortune-detail { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 10px; }
-  .fortune-advice {
-    font-size: 12px; color: var(--t600); background: var(--bg);
-    border-radius: var(--radius-md); padding: 8px 12px;
-    border: 0.5px solid var(--t200);
-  }
-  .fortune-date-note { font-size: 11px; color: var(--text3); text-align: right; margin-top: 6px; }
-
-  .redraw-btn {
-    width: 100%; background: none; border: 0.5px solid var(--border2);
-    border-radius: var(--radius-md); padding: 8px; font-size: 13px;
-    color: var(--text2); cursor: pointer; font-family: inherit; margin-top: 4px;
-  }
-  .redraw-btn:hover { background: var(--bg2); }
-  .hidden { display: none; }
+  .primary-btn:hover { background:var(--p600); }
+  .primary-btn:active { transform:scale(0.98); }
 </style>
 </head>
 <body>
@@ -168,140 +217,158 @@
     <div class="app-sub" id="today-label"></div>
   </div>
 
-  <div class="card">
-    <div class="tabs">
-      <button class="tab-btn active"  id="tab-fortune" onclick="switchTab('fortune')">每日好運</button>
-      <button class="tab-btn"         id="tab-record"  onclick="switchTab('record')">記錄心情</button>
-      <button class="tab-btn"         id="tab-log"     onclick="switchTab('log')">歷史紀錄</button>
-      <button class="tab-btn"         id="tab-chart"   onclick="switchTab('chart')">本月曲線</button>
-    </div>
-
-    <!-- 每日好運 -->
-    <div class="view active" id="view-fortune">
-      <div class="fortune-wrap">
-        <div class="fortune-jar" id="fortune-jar" onclick="drawFortune()" title="點我搖籤">🎋</div>
-        <div class="fortune-hint" id="fortune-hint">點竹筒搖一支今日好運籤</div>
-      </div>
-      <div class="fortune-card" id="fortune-card">
-        <span class="fortune-rank" id="fortune-rank"></span>
-        <div class="fortune-main" id="fortune-main"></div>
-        <div class="fortune-detail" id="fortune-detail"></div>
-        <div class="fortune-advice" id="fortune-advice"></div>
-        <div class="fortune-date-note" id="fortune-date-note"></div>
-      </div>
-      <button class="redraw-btn hidden" id="redraw-btn" onclick="drawFortune()">再搖一次</button>
-    </div>
-
-    <!-- 記錄心情 -->
-    <div class="view" id="view-record">
-      <div class="mood-grid">
-        <button class="mood-btn" data-val="5" onclick="selectMood(this)"><span class="mood-emoji">😄</span><span class="mood-label">開心</span></button>
-        <button class="mood-btn" data-val="4" onclick="selectMood(this)"><span class="mood-emoji">🙂</span><span class="mood-label">還好</span></button>
-        <button class="mood-btn" data-val="3" onclick="selectMood(this)"><span class="mood-emoji">😐</span><span class="mood-label">普通</span></button>
-        <button class="mood-btn" data-val="2" onclick="selectMood(this)"><span class="mood-emoji">😩</span><span class="mood-label">有點累</span></button>
-        <button class="mood-btn" data-val="1" onclick="selectMood(this)"><span class="mood-emoji">😭</span><span class="mood-label">好累喔</span></button>
-      </div>
-      <textarea class="note-input" id="note-input" rows="2" placeholder="今天發生什麼事？（選填）"></textarea>
-      <button class="save-btn" id="save-btn" onclick="saveRecord()">儲存今天的心情</button>
-      <div class="save-msg" id="save-msg"></div>
-    </div>
-
-
-    <!-- 歷史紀錄 -->
-    <div class="view" id="view-log">
-      <div id="log-list"></div>
-    </div>
-
-    <!-- 本月曲線 -->
-    <div class="view" id="view-chart">
-      <div class="stats-grid" id="stats-row"></div>
-      <p style="font-size:13px; font-weight:500; margin-bottom:12px;">本月每日心情</p>
-      <div class="bar-chart-wrap">
-        <div class="bar-chart" id="bar-chart"></div>
-      </div>
+  <!-- 暱稱設定 -->
+  <div id="setup-screen">
+    <div class="setup-card">
+      <div class="setup-emoji">👋</div>
+      <div class="setup-title">歡迎來到邁斯朋友心情日記</div>
+      <div class="setup-sub">請輸入你的暱稱，之後就不用再填了！</div>
+      <input class="setup-input" id="nickname-input" type="text" placeholder="你的暱稱" maxlength="10">
+      <button class="primary-btn" onclick="confirmNickname()">開始使用</button>
     </div>
   </div>
 
+  <!-- 主畫面 -->
+  <div id="main-screen" class="hidden">
+    <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-fortune"  onclick="switchTab('fortune')">每日好運</button>
+        <button class="tab-btn"        id="tab-record"   onclick="switchTab('record')">記錄心情</button>
+        <button class="tab-btn"        id="tab-team"     onclick="switchTab('team')">大家的心情</button>
+        <button class="tab-btn"        id="tab-bulletin" onclick="switchTab('bulletin')">佈告欄</button>
+        <button class="tab-btn"        id="tab-log"      onclick="switchTab('log')">我的紀錄</button>
+      </div>
+
+      <!-- 每日好運 -->
+      <div class="view active" id="view-fortune">
+        <div class="fortune-wrap">
+          <div class="fortune-jar" id="fortune-jar" onclick="drawFortune()">🎋</div>
+          <div class="fortune-hint" id="fortune-hint">點竹筒搖一支今日好運籤</div>
+        </div>
+        <div class="fortune-card" id="fortune-card">
+          <span class="fortune-rank" id="fortune-rank"></span>
+          <div class="fortune-main" id="fortune-main"></div>
+          <div class="fortune-detail" id="fortune-detail"></div>
+          <div class="fortune-advice" id="fortune-advice"></div>
+          <div class="fortune-date-note" id="fortune-date-note"></div>
+        </div>
+        <button class="redraw-btn hidden" id="redraw-btn" onclick="drawFortune()">再搖一次</button>
+      </div>
+
+      <!-- 記錄心情 -->
+      <div class="view" id="view-record">
+        <div class="nickname-bar">
+          <span class="nickname-tag" id="nickname-display"></span>
+          <button class="change-nick-btn" onclick="changeNickname()">更改暱稱</button>
+        </div>
+        <div class="mood-grid">
+          <button class="mood-btn" data-val="5" onclick="selectMood(this)"><span class="mood-emoji">😄</span><span class="mood-label">開心</span></button>
+          <button class="mood-btn" data-val="4" onclick="selectMood(this)"><span class="mood-emoji">🙂</span><span class="mood-label">還好</span></button>
+          <button class="mood-btn" data-val="3" onclick="selectMood(this)"><span class="mood-emoji">😐</span><span class="mood-label">普通</span></button>
+          <button class="mood-btn" data-val="2" onclick="selectMood(this)"><span class="mood-emoji">😩</span><span class="mood-label">有點累</span></button>
+          <button class="mood-btn" data-val="1" onclick="selectMood(this)"><span class="mood-emoji">😭</span><span class="mood-label">好累喔</span></button>
+        </div>
+        <textarea class="note-input" id="note-input" rows="2" placeholder="今天發生什麼事？（選填）"></textarea>
+        <label class="public-toggle" onclick="togglePublic()">
+          <div class="toggle-box" id="public-toggle-box"><div class="toggle-dot"></div></div>
+          <span id="public-label">公開給大家看</span>
+        </label>
+        <button class="save-btn" id="save-btn" onclick="saveRecord()">儲存今天的心情</button>
+        <div class="save-msg" id="save-msg"></div>
+      </div>
+
+      <!-- 大家的心情 -->
+      <div class="view" id="view-team">
+        <p class="section-head">今天大家的心情</p>
+        <div id="team-list"><div class="loading-hint">載入中...</div></div>
+      </div>
+
+      <!-- 佈告欄 -->
+      <div class="view" id="view-bulletin">
+        <div id="bulletin-list"><div class="loading-hint">載入中...</div></div>
+      </div>
+
+      <!-- 我的紀錄 -->
+      <div class="view" id="view-log">
+        <div class="stats-grid" id="stats-row"></div>
+        <p class="section-head">本月每日心情</p>
+        <div class="bar-chart-wrap"><div class="bar-chart" id="bar-chart"></div></div>
+        <p class="section-head" style="margin-top:20px;">歷史紀錄</p>
+        <div id="log-list"></div>
+      </div>
+
+    </div>
+  </div>
 </div>
+
 <script>
+const API = 'https://script.google.com/macros/s/AKfycbwEyPRAfWSnLRCdqbyEdlNsJcLo7D1cXb6skj9FEIXQWRCI74ROAZxc0Zfe3XEZxVtzuA/exec';
 const MOODS  = {5:'😄',4:'🙂',3:'😐',2:'😩',1:'😭'};
 const LABELS = {5:'開心',4:'還好',3:'普通',2:'有點累',1:'好累喔'};
 const BAR_COLORS = {5:'#1D9E75',4:'#7F77DD',3:'#888780',2:'#EF9F27',1:'#E24B4A'};
+const AVATAR_COLORS = ['#EEEDFE','#E1F5EE','#FAEEDA','#FBEAF0','#E6F1FB'];
+const AVATAR_TEXT   = ['#534AB7','#0F6E56','#854F0B','#993556','#185FA5'];
 
 const FORTUNES = [
-  { rank:'天選之日', rankClass:'rank-best',
-    main:'今天的你，擋都擋不住',
-    detail:'所有電話都接得順，所有候選人都回覆，所有店長都好說話。這種天選之日，好好把握！',
-    advice:'建議：把最難搞的那通電話排在今天打。' },
-  { rank:'大吉', rankClass:'rank-great',
-    main:'貴人就在你左右，機會悄悄敲門',
-    detail:'今天會遇到意想不到的好消息，可能是一個久未聯繫的候選人主動回頭，也可能是合作夥伴帶來驚喜。',
-    advice:'建議：多跟同事說說話，好事就藏在聊天裡。' },
-  { rank:'大吉', rankClass:'rank-great',
-    main:'今日財運旺，業績說不定有驚喜',
-    detail:'數字這種東西，有時候一整個月卡住，然後某一天突然全開。今天就是那個「突然全開」的候選日。',
-    advice:'建議：把之前沒追上的名單掃一輪，說不定有人在等你。' },
-  { rank:'大吉', rankClass:'rank-great',
-    main:'你就是今天團隊裡最強的那個',
-    detail:'不是每天都需要被看見，但今天你的存在對周圍的人來說真的很重要。你的穩定，是大家的定心丸。',
-    advice:'建議：有什麼想分享的知識或技巧，今天說出來。' },
-  { rank:'吉', rankClass:'rank-good',
-    main:'穩穩當當，每一步都算數',
-    detail:'今天不求大爆發，但每一件做完的小事都在累積能量。認真打出去的每一通電話，都是在為未來鋪路。',
-    advice:'建議：把待辦清單整理一下，劃掉幾項，會很有成就感。' },
-  { rank:'吉', rankClass:'rank-good',
-    main:'心靜則萬事順，今天適合深呼吸',
-    detail:'外在再忙，內心保持一片清明，事情就會自然理順。遇到煩人的事，先喝口水，再說。',
-    advice:'建議：午休時離開座位走走，充個電。' },
-  { rank:'吉', rankClass:'rank-good',
-    main:'你的努力，比你以為的還要值錢',
-    detail:'顧問這份工常常付出看不見回報，但今天的籤提醒你：你做的每一件事，都有它的重量和價值。',
-    advice:'建議：今天可以對自己好一點，下班吃個想吃的東西。' },
-  { rank:'吉', rankClass:'rank-good',
-    main:'說出口的話，今天特別有力量',
-    detail:'今天你的表達能力在線上，和候選人溝通、和店長協調，說出來的話都比平時更清楚有說服力。',
-    advice:'建議：把一直拖著沒打的那通電話，今天打掉它。' },
-  { rank:'吉', rankClass:'rank-good',
-    main:'你記得的每個人，都記得你',
-    detail:'你認真對待每一位候選人、每一個店長、每一位同事——這些善意都在循環，早晚會回到你身上。',
-    advice:'建議：今天可以傳一句話給許久沒聯絡的朋友。' },
-  { rank:'吉', rankClass:'rank-good',
-    main:'細節裡藏著今天的好運',
-    detail:'今天的好事不會大張旗鼓，而是藏在一封回覆的訊息、一個確認的班表、一句「謝謝你」裡面。',
-    advice:'建議：今天注意那些小小的好事，它們值得被看見。' },
-  { rank:'小吉', rankClass:'rank-ok',
-    main:'今天適合播種，不急著看收成',
-    detail:'事情推進可能比預期慢，但方向是對的。不要因為暫時的停滯就灰心，很多事情需要時間發酵。',
-    advice:'建議：先做容易的，累積動能，再挑戰難的。' },
-  { rank:'小吉', rankClass:'rank-ok',
-    main:'雲層後面是晴天，再等一下下',
-    detail:'今天可能有些小摩擦或等待，但這都是暫時的。保持耐心，不要讓小事影響整體心情。',
-    advice:'建議：遇到卡關先擱著，去做別的，等等回來說不定就通了。' },
-  { rank:'小吉', rankClass:'rank-ok',
-    main:'休息也是工作的一部分',
-    detail:'顧問總是把別人的事排在自己前面，但今天的籤提醒你：你自己也需要被照顧。能量充足才能照顧別人。',
-    advice:'建議：今天不要硬撐，累了就停一下。' },
-  { rank:'學習籤', rankClass:'rank-learn',
-    main:'轉個彎，也許是更好的路',
-    detail:'今天如果計畫被打亂，不一定是壞事。有時候繞路才能看見不同的風景，新的可能性就藏在意外之中。',
-    advice:'建議：對今天的「意外」保持好奇心，說不定有意思。' },
-  { rank:'學習籤', rankClass:'rank-learn',
-    main:'慢下來，才能看清楚方向',
-    detail:'今天適合回頭整理，而不是一直往前衝。有時候暫停一下，重新確認目標，反而走得更快更穩。',
-    advice:'建議：花十分鐘整理一下資料夾或追蹤名單，清清腦袋。' }
+  {rank:'天選之日',rankClass:'rank-best',main:'今天的你，擋都擋不住',detail:'所有電話都接得順，所有候選人都回覆，所有店長都好說話。這種天選之日，好好把握！',advice:'建議：把最難搞的那通電話排在今天打。'},
+  {rank:'大吉',rankClass:'rank-great',main:'貴人就在你左右，機會悄悄敲門',detail:'今天會遇到意想不到的好消息，可能是一個久未聯繫的候選人主動回頭，也可能是合作夥伴帶來驚喜。',advice:'建議：多跟同事說說話，好事就藏在聊天裡。'},
+  {rank:'大吉',rankClass:'rank-great',main:'今日財運旺，業績說不定有驚喜',detail:'數字這種東西，有時候一整個月卡住，然後某一天突然全開。今天就是那個候選日。',advice:'建議：把之前沒追上的名單掃一輪，說不定有人在等你。'},
+  {rank:'大吉',rankClass:'rank-great',main:'你就是今天團隊裡最強的那個',detail:'不是每天都需要被看見，但今天你的存在對周圍的人來說真的很重要。你的穩定，是大家的定心丸。',advice:'建議：有什麼想分享的知識或技巧，今天說出來。'},
+  {rank:'吉',rankClass:'rank-good',main:'穩穩當當，每一步都算數',detail:'今天不求大爆發，但每一件做完的小事都在累積能量。認真打出去的每一通電話，都是在為未來鋪路。',advice:'建議：把待辦清單整理一下，劃掉幾項，會很有成就感。'},
+  {rank:'吉',rankClass:'rank-good',main:'心靜則萬事順，今天適合深呼吸',detail:'外在再忙，內心保持一片清明，事情就會自然理順。遇到煩人的事，先喝口水，再說。',advice:'建議：午休時離開座位走走，充個電。'},
+  {rank:'吉',rankClass:'rank-good',main:'你的努力，比你以為的還要值錢',detail:'顧問這份工常常付出看不見回報，但今天的籤提醒你：你做的每一件事，都有它的重量和價值。',advice:'建議：今天可以對自己好一點，下班吃個想吃的東西。'},
+  {rank:'吉',rankClass:'rank-good',main:'說出口的話，今天特別有力量',detail:'今天你的表達能力在線上，和候選人溝通、和店長協調，說出來的話都比平時更清楚有說服力。',advice:'建議：把一直拖著沒打的那通電話，今天打掉它。'},
+  {rank:'吉',rankClass:'rank-good',main:'你記得的每個人，都記得你',detail:'你認真對待每一位候選人、每一個店長、每一位同事——這些善意都在循環，早晚會回到你身上。',advice:'建議：今天可以傳一句話給許久沒聯絡的朋友。'},
+  {rank:'吉',rankClass:'rank-good',main:'細節裡藏著今天的好運',detail:'今天的好事不會大張旗鼓，而是藏在一封回覆的訊息、一個確認的班表、一句「謝謝你」裡面。',advice:'建議：今天注意那些小小的好事，它們值得被看見。'},
+  {rank:'小吉',rankClass:'rank-ok',main:'今天適合播種，不急著看收成',detail:'事情推進可能比預期慢，但方向是對的。不要因為暫時的停滯就灰心，很多事情需要時間發酵。',advice:'建議：先做容易的，累積動能，再挑戰難的。'},
+  {rank:'小吉',rankClass:'rank-ok',main:'雲層後面是晴天，再等一下下',detail:'今天可能有些小摩擦或等待，但這都是暫時的。保持耐心，不要讓小事影響整體心情。',advice:'建議：遇到卡關先擱著，去做別的，等等回來說不定就通了。'},
+  {rank:'小吉',rankClass:'rank-ok',main:'休息也是工作的一部分',detail:'顧問總是把別人的事排在自己前面，但今天的籤提醒你：你自己也需要被照顧。能量充足才能照顧別人。',advice:'建議：今天不要硬撐，累了就停一下。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'轉個彎，也許是更好的路',detail:'今天如果計畫被打亂，不一定是壞事。有時候繞路才能看見不同的風景，新的可能性就藏在意外之中。',advice:'建議：對今天的「意外」保持好奇心，說不定有意思。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'慢下來，才能看清楚方向',detail:'今天適合回頭整理，而不是一直往前衝。有時候暫停一下，重新確認目標，反而走得更快更穩。',advice:'建議：花十分鐘整理一下資料夾或追蹤名單，清清腦袋。'}
 ];
 
+let nickname = '';
 let selectedMood = null;
-let records = [];
-
-function loadRecords() {
-  try { records = JSON.parse(localStorage.getItem('msp_mood_v1') || '[]'); } catch(e) { records = []; }
-}
-function saveRecords() { localStorage.setItem('msp_mood_v1', JSON.stringify(records)); }
+let isPublic = true;
+let localRecords = [];
 
 function getTodayKey() {
   const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+function loadLocal() {
+  try { localRecords = JSON.parse(localStorage.getItem('msp_mood_v2')||'[]'); } catch(e){ localRecords=[]; }
+}
+function saveLocal() { localStorage.setItem('msp_mood_v2', JSON.stringify(localRecords)); }
+
+function confirmNickname() {
+  const val = document.getElementById('nickname-input').value.trim();
+  if (!val) { document.getElementById('nickname-input').style.borderColor='#E24B4A'; return; }
+  nickname = val;
+  localStorage.setItem('msp_nickname', nickname);
+  showMain();
+}
+
+function changeNickname() {
+  localStorage.removeItem('msp_nickname');
+  document.getElementById('main-screen').classList.add('hidden');
+  document.getElementById('setup-screen').classList.remove('hidden');
+  document.getElementById('nickname-input').value = '';
+}
+
+function showMain() {
+  document.getElementById('setup-screen').classList.add('hidden');
+  document.getElementById('main-screen').classList.remove('hidden');
+  document.getElementById('nickname-display').textContent = '👤 ' + nickname;
+  renderTodayState();
+  switchTab('fortune');
+}
+
+function avatarColor(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % AVATAR_COLORS.length;
+  return { bg: AVATAR_COLORS[h], text: AVATAR_TEXT[h] };
 }
 
 function selectMood(btn) {
@@ -310,17 +377,41 @@ function selectMood(btn) {
   selectedMood = parseInt(btn.dataset.val);
 }
 
+function togglePublic() {
+  isPublic = !isPublic;
+  document.getElementById('public-toggle-box').classList.toggle('on', isPublic);
+  document.getElementById('public-label').textContent = isPublic ? '公開給大家看' : '只有自己看';
+}
+
 function saveRecord() {
   if (!selectedMood) { showMsg('請先選一個心情喔 ~'); return; }
   const key = getTodayKey();
   const note = document.getElementById('note-input').value.trim();
-  const idx = records.findIndex(r => r.date === key);
-  const rec = { date: key, mood: selectedMood, note };
-  if (idx >= 0) records[idx] = rec; else records.push(rec);
-  records.sort((a,b) => b.date.localeCompare(a.date));
-  saveRecords();
-  showMsg('已儲存！' + MOODS[selectedMood]);
-  document.getElementById('save-btn').textContent = '更新今天的心情';
+  const rec = { date: key, mood: selectedMood, note, isPublic };
+
+  const idx = localRecords.findIndex(r => r.date === key);
+  if (idx >= 0) localRecords[idx] = rec; else localRecords.push(rec);
+  localRecords.sort((a,b) => b.date.localeCompare(a.date));
+  saveLocal();
+
+  document.getElementById('save-btn').textContent = '儲存中...';
+  document.getElementById('save-btn').disabled = true;
+
+  fetch(API, {
+    method: 'POST',
+    body: JSON.stringify({ action:'saveMood', nickname, date:key, mood:selectedMood, note, isPublic })
+  })
+  .then(r => r.json())
+  .then(() => {
+    showMsg('已儲存！' + MOODS[selectedMood]);
+    document.getElementById('save-btn').textContent = '更新今天的心情';
+    document.getElementById('save-btn').disabled = false;
+  })
+  .catch(() => {
+    showMsg('儲存失敗，請稍後再試');
+    document.getElementById('save-btn').textContent = '儲存今天的心情';
+    document.getElementById('save-btn').disabled = false;
+  });
 }
 
 function showMsg(t) {
@@ -330,110 +421,149 @@ function showMsg(t) {
 }
 
 function renderTodayState() {
-  const rec = records.find(r => r.date === getTodayKey());
-  if (!rec) return;
-  document.querySelectorAll('.mood-btn').forEach(b => {
-    b.classList.toggle('selected', parseInt(b.dataset.val) === rec.mood);
-  });
+  const rec = localRecords.find(r => r.date === getTodayKey());
+  if (!rec) { isPublic = true; document.getElementById('public-toggle-box').classList.add('on'); return; }
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.toggle('selected', parseInt(b.dataset.val) === rec.mood));
   selectedMood = rec.mood;
   document.getElementById('note-input').value = rec.note || '';
+  isPublic = rec.isPublic !== false;
+  document.getElementById('public-toggle-box').classList.toggle('on', isPublic);
+  document.getElementById('public-label').textContent = isPublic ? '公開給大家看' : '只有自己看';
   document.getElementById('save-btn').textContent = '更新今天的心情';
 }
 
-function drawFortune() {
-  const jar = document.getElementById('fortune-jar');
-  jar.classList.remove('shaking');
-  void jar.offsetWidth;
-  jar.classList.add('shaking');
-  const card = document.getElementById('fortune-card');
-  card.classList.remove('show');
-
-  setTimeout(() => {
-    const f = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
-    document.getElementById('fortune-rank').textContent = f.rank;
-    document.getElementById('fortune-rank').className = 'fortune-rank ' + f.rankClass;
-    document.getElementById('fortune-main').textContent = f.main;
-    document.getElementById('fortune-detail').textContent = f.detail;
-    document.getElementById('fortune-advice').textContent = f.advice;
-    const d = new Date();
-    document.getElementById('fortune-date-note').textContent =
-      d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate() + ' 抽籤紀錄';
-    card.classList.add('show');
-    document.getElementById('redraw-btn').classList.remove('hidden');
-    document.getElementById('fortune-hint').textContent = '今天的籤抽好了 ✓';
-  }, 520);
-}
-
-function renderLog() {
-  const el = document.getElementById('log-list');
-  if (!records.length) { el.innerHTML = '<div class="empty-hint">還沒有紀錄，先去記一筆吧 ~</div>'; return; }
-  el.innerHTML = records.slice(0, 60).map(r =>
-    `<div class="log-row">
-      <span class="log-date">${r.date}</span>
-      <span class="log-emoji">${MOODS[r.mood]}</span>
-      <span class="log-mood-lbl">${LABELS[r.mood]}</span>
-      <span class="log-note">${r.note || ''}</span>
-      <button class="del-btn" onclick="deleteRecord('${r.date}')" aria-label="刪除">×</button>
-    </div>`
-  ).join('');
-}
-
-function deleteRecord(key) {
-  records = records.filter(r => r.date !== key);
-  saveRecords(); renderLog(); renderChart();
-}
-
-function renderChart() {
-  const now = new Date();
-  const ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-  const monthRecs = records.filter(r => r.date.startsWith(ym));
-  const statsEl = document.getElementById('stats-row');
-  if (!monthRecs.length) {
-    statsEl.innerHTML = '';
-    document.getElementById('bar-chart').innerHTML = '<div class="empty-hint">本月還沒有紀錄</div>';
-    return;
-  }
-  const avg = monthRecs.reduce((s,r) => s+r.mood, 0) / monthRecs.length;
-  const best = monthRecs.reduce((a,b) => a.mood >= b.mood ? a : b);
-  const worst = monthRecs.reduce((a,b) => a.mood <= b.mood ? a : b);
-  statsEl.innerHTML = `
-    <div class="stat-card"><div class="stat-num">${avg.toFixed(1)}</div><div class="stat-lbl">本月平均心情</div></div>
-    <div class="stat-card"><div class="stat-num">${MOODS[best.mood]}</div><div class="stat-lbl">最好那天<br>${best.date.slice(5)}</div></div>
-    <div class="stat-card"><div class="stat-num">${MOODS[worst.mood]}</div><div class="stat-lbl">最累那天<br>${worst.date.slice(5)}</div></div>
-  `;
-  const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-  const today = now.getDate();
-  const bars = [];
-  for (let d = 1; d <= Math.min(daysInMonth, today); d++) {
-    const key = ym + '-' + String(d).padStart(2,'0');
-    bars.push({ d, rec: monthRecs.find(r => r.date === key) });
-  }
-  document.getElementById('bar-chart').innerHTML = bars.map(({d, rec}) => {
-    const h = rec ? Math.round((rec.mood / 5) * 72) : 4;
-    const color = rec ? BAR_COLORS[rec.mood] : 'var(--border)';
-    return `<div class="bar-col">
-      <div class="bar-emoji">${rec ? MOODS[rec.mood] : ''}</div>
-      <div class="bar" style="height:${h}px; background:${color};"></div>
-      <div class="bar-day">${d}</div>
+function renderTeam(records) {
+  const el = document.getElementById('team-list');
+  const today = getTodayKey();
+  const todayRecs = records.filter(r => r.date === today && r.isPublic);
+  if (!todayRecs.length) { el.innerHTML = '<div class="empty-hint">今天還沒有人記錄心情，你來第一個！</div>'; return; }
+  el.innerHTML = todayRecs.map(r => {
+    const c = avatarColor(r.nickname);
+    const initials = r.nickname.slice(0,1);
+    return `<div class="team-row">
+      <div class="avatar" style="background:${c.bg};color:${c.text}">${initials}</div>
+      <div style="flex:1;min-width:0">
+        <div class="team-name">${r.nickname}</div>
+        ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
+      </div>
+      <div class="team-emoji-big">${MOODS[r.mood]}</div>
     </div>`;
   }).join('');
 }
 
+function renderBulletin(posts) {
+  const el = document.getElementById('bulletin-list');
+  if (!posts || !posts.length) { el.innerHTML = '<div class="empty-hint">佈告欄目前沒有內容</div>'; return; }
+  el.innerHTML = posts.map(p => `
+    <div class="bulletin-post">
+      ${p.tag ? `<span class="bulletin-tag">${p.tag}</span>` : ''}
+      <div class="bulletin-title">${p.title}</div>
+      <div class="bulletin-content">${p.content.replace(/\n/g,'<br>')}</div>
+      <div class="bulletin-date">${p.date}</div>
+    </div>`).join('');
+}
+
+function renderLog() {
+  const now = new Date();
+  const ym = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  const monthRecs = localRecords.filter(r => r.date.startsWith(ym));
+  const statsEl = document.getElementById('stats-row');
+
+  if (!monthRecs.length) {
+    statsEl.innerHTML = '';
+    document.getElementById('bar-chart').innerHTML = '<div class="empty-hint">本月還沒有紀錄</div>';
+  } else {
+    const avg = monthRecs.reduce((s,r)=>s+r.mood,0)/monthRecs.length;
+    const best = monthRecs.reduce((a,b)=>a.mood>=b.mood?a:b);
+    const worst = monthRecs.reduce((a,b)=>a.mood<=b.mood?a:b);
+    statsEl.innerHTML = `
+      <div class="stat-card"><div class="stat-num">${avg.toFixed(1)}</div><div class="stat-lbl">本月平均心情</div></div>
+      <div class="stat-card"><div class="stat-num">${MOODS[best.mood]}</div><div class="stat-lbl">最好那天<br>${best.date.slice(5)}</div></div>
+      <div class="stat-card"><div class="stat-num">${MOODS[worst.mood]}</div><div class="stat-lbl">最累那天<br>${worst.date.slice(5)}</div></div>`;
+    const daysInMonth = new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+    const bars = [];
+    for (let d=1;d<=Math.min(daysInMonth,now.getDate());d++) {
+      const key=ym+'-'+String(d).padStart(2,'0');
+      bars.push({d,rec:monthRecs.find(r=>r.date===key)});
+    }
+    document.getElementById('bar-chart').innerHTML = bars.map(({d,rec})=>{
+      const h=rec?Math.round((rec.mood/5)*72):4;
+      const color=rec?BAR_COLORS[rec.mood]:'var(--border)';
+      return `<div class="bar-col"><div class="bar-emoji-sm">${rec?MOODS[rec.mood]:''}</div><div class="bar" style="height:${h}px;background:${color}"></div><div class="bar-day">${d}</div></div>`;
+    }).join('');
+  }
+
+  const logEl = document.getElementById('log-list');
+  if (!localRecords.length) { logEl.innerHTML = '<div class="empty-hint">還沒有紀錄</div>'; return; }
+  logEl.innerHTML = localRecords.slice(0,60).map(r=>`
+    <div class="log-row">
+      <span class="log-date">${r.date}</span>
+      <span class="log-emoji">${MOODS[r.mood]}</span>
+      <span class="log-mood-lbl">${LABELS[r.mood]}</span>
+      <span class="log-note">${r.note||''}</span>
+      ${r.isPublic?'<span class="log-pub">公開</span>':''}
+      <button class="del-btn" onclick="deleteRecord('${r.date}')" aria-label="刪除">×</button>
+    </div>`).join('');
+}
+
+function deleteRecord(key) {
+  localRecords = localRecords.filter(r=>r.date!==key);
+  saveLocal(); renderLog();
+}
+
+function drawFortune() {
+  const jar = document.getElementById('fortune-jar');
+  jar.classList.remove('shaking'); void jar.offsetWidth; jar.classList.add('shaking');
+  const card = document.getElementById('fortune-card'); card.classList.remove('show');
+  setTimeout(()=>{
+    const f = FORTUNES[Math.floor(Math.random()*FORTUNES.length)];
+    document.getElementById('fortune-rank').textContent = f.rank;
+    document.getElementById('fortune-rank').className = 'fortune-rank '+f.rankClass;
+    document.getElementById('fortune-main').textContent = f.main;
+    document.getElementById('fortune-detail').textContent = f.detail;
+    document.getElementById('fortune-advice').textContent = f.advice;
+    const d=new Date();
+    document.getElementById('fortune-date-note').textContent = d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+' 抽籤紀錄';
+    card.classList.add('show');
+    document.getElementById('redraw-btn').classList.remove('hidden');
+    document.getElementById('fortune-hint').textContent = '今天的籤抽好了 ✓';
+  },520);
+}
+
+let remoteData = null;
+
+function fetchRemote() {
+  fetch(API+'?action=getMoods')
+    .then(r=>r.json())
+    .then(data=>{ remoteData = data.records || []; })
+    .catch(()=>{ remoteData = []; });
+  fetch(API+'?action=getBulletin')
+    .then(r=>r.json())
+    .then(data=>{ renderBulletin(data.posts||[]); })
+    .catch(()=>{ renderBulletin([]); });
+}
+
 function switchTab(name) {
-  ['record','fortune','log','chart'].forEach(t => {
-    document.getElementById('view-' + t).classList.toggle('active', t === name);
-    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+  ['fortune','record','team','bulletin','log'].forEach(t=>{
+    document.getElementById('view-'+t).classList.toggle('active', t===name);
+    document.getElementById('tab-'+t).classList.toggle('active', t===name);
   });
-  if (name === 'log') renderLog();
-  if (name === 'chart') renderChart();
+  if (name==='team') {
+    if (remoteData) renderTeam(remoteData);
+    else { document.getElementById('team-list').innerHTML='<div class="loading-hint">載入中...</div>'; fetch(API+'?action=getMoods').then(r=>r.json()).then(d=>{remoteData=d.records||[];renderTeam(remoteData);}).catch(()=>renderTeam([])); }
+  }
+  if (name==='log') renderLog();
 }
 
 const d = new Date();
-document.getElementById('today-label').textContent =
-  d.getFullYear() + ' 年 ' + (d.getMonth()+1) + ' 月 ' + d.getDate() + ' 日';
-loadRecords();
-renderTodayState();
-switchTab('fortune');
+document.getElementById('today-label').textContent = d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月 '+d.getDate()+' 日';
+
+loadLocal();
+nickname = localStorage.getItem('msp_nickname') || '';
+if (nickname) showMain();
+else { document.getElementById('setup-screen').classList.remove('hidden'); }
+
+nickname && fetchRemote();
 </script>
 </body>
 </html>
