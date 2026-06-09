@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>顧問心情日記</title>
+<title>邁斯朋友心情日記</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -164,20 +164,36 @@
 <div class="container">
 
   <div class="app-header">
-    <div class="app-title">顧問心情日記</div>
+    <div class="app-title">邁斯朋友心情日記</div>
     <div class="app-sub" id="today-label"></div>
   </div>
 
   <div class="card">
     <div class="tabs">
-      <button class="tab-btn active" id="tab-record"  onclick="switchTab('record')">記錄心情</button>
-      <button class="tab-btn"        id="tab-fortune" onclick="switchTab('fortune')">每日求籤</button>
-      <button class="tab-btn"        id="tab-log"     onclick="switchTab('log')">歷史紀錄</button>
-      <button class="tab-btn"        id="tab-chart"   onclick="switchTab('chart')">本月曲線</button>
+      <button class="tab-btn active"  id="tab-fortune" onclick="switchTab('fortune')">每日好運</button>
+      <button class="tab-btn"         id="tab-record"  onclick="switchTab('record')">記錄心情</button>
+      <button class="tab-btn"         id="tab-log"     onclick="switchTab('log')">歷史紀錄</button>
+      <button class="tab-btn"         id="tab-chart"   onclick="switchTab('chart')">本月曲線</button>
+    </div>
+
+    <!-- 每日好運 -->
+    <div class="view active" id="view-fortune">
+      <div class="fortune-wrap">
+        <div class="fortune-jar" id="fortune-jar" onclick="drawFortune()" title="點我搖籤">🎋</div>
+        <div class="fortune-hint" id="fortune-hint">點竹筒搖一支今日好運籤</div>
+      </div>
+      <div class="fortune-card" id="fortune-card">
+        <span class="fortune-rank" id="fortune-rank"></span>
+        <div class="fortune-main" id="fortune-main"></div>
+        <div class="fortune-detail" id="fortune-detail"></div>
+        <div class="fortune-advice" id="fortune-advice"></div>
+        <div class="fortune-date-note" id="fortune-date-note"></div>
+      </div>
+      <button class="redraw-btn hidden" id="redraw-btn" onclick="drawFortune()">再搖一次</button>
     </div>
 
     <!-- 記錄心情 -->
-    <div class="view active" id="view-record">
+    <div class="view" id="view-record">
       <div class="mood-grid">
         <button class="mood-btn" data-val="5" onclick="selectMood(this)"><span class="mood-emoji">😄</span><span class="mood-label">開心</span></button>
         <button class="mood-btn" data-val="4" onclick="selectMood(this)"><span class="mood-emoji">🙂</span><span class="mood-label">還好</span></button>
@@ -190,21 +206,6 @@
       <div class="save-msg" id="save-msg"></div>
     </div>
 
-    <!-- 每日求籤 -->
-    <div class="view" id="view-fortune">
-      <div class="fortune-wrap">
-        <div class="fortune-jar" id="fortune-jar" onclick="drawFortune()" title="點我搖籤">🎋</div>
-        <div class="fortune-hint" id="fortune-hint">點竹筒搖一支今日籤</div>
-      </div>
-      <div class="fortune-card" id="fortune-card">
-        <span class="fortune-rank" id="fortune-rank"></span>
-        <div class="fortune-main" id="fortune-main"></div>
-        <div class="fortune-detail" id="fortune-detail"></div>
-        <div class="fortune-advice" id="fortune-advice"></div>
-        <div class="fortune-date-note" id="fortune-date-note"></div>
-      </div>
-      <button class="redraw-btn hidden" id="redraw-btn" onclick="drawFortune()">再搖一次</button>
-    </div>
 
     <!-- 歷史紀錄 -->
     <div class="view" id="view-log">
@@ -432,6 +433,7 @@ document.getElementById('today-label').textContent =
   d.getFullYear() + ' 年 ' + (d.getMonth()+1) + ' 月 ' + d.getDate() + ' 日';
 loadRecords();
 renderTodayState();
+switchTab('fortune');
 </script>
 </body>
 </html>
