@@ -32,66 +32,33 @@
     padding:20px 16px 60px;
   }
   .container { width:100%; max-width:480px; }
-
-  /* header */
   .app-header { text-align:center; margin-bottom:20px; }
   .app-title { font-size:20px; font-weight:500; margin-bottom:4px; }
   .app-sub { font-size:13px; color:var(--text3); }
 
-  /* nickname setup */
-  .setup-card {
-    background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg);
-    padding:28px 20px; text-align:center; margin-bottom:12px;
-  }
+  .setup-card { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:28px 20px; text-align:center; margin-bottom:12px; }
   .setup-emoji { font-size:40px; margin-bottom:12px; }
   .setup-title { font-size:15px; font-weight:500; margin-bottom:6px; }
-  .setup-sub { font-size:13px; color:var(--text2); margin-bottom:16px; }
-  .setup-input {
-    width:100%; background:var(--bg2); border:0.5px solid var(--border2);
-    border-radius:var(--radius-md); padding:10px 14px; font-size:15px;
-    color:var(--text); font-family:inherit; outline:none; text-align:center;
-    margin-bottom:12px;
-  }
+  .setup-sub { font-size:13px; color:var(--text2); margin-bottom:16px; line-height:1.6; }
+  .setup-input { width:100%; background:var(--bg2); border:0.5px solid var(--border2); border-radius:var(--radius-md); padding:10px 14px; font-size:15px; color:var(--text); font-family:inherit; outline:none; text-align:center; margin-bottom:12px; }
   .setup-input:focus { border-color:var(--p400); }
 
-  /* card */
   .card { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:20px; margin-bottom:12px; }
-
-  /* tabs */
-  .tabs { display:flex; border-bottom:0.5px solid var(--border); margin-bottom:20px; overflow-x:auto; gap:0; }
-  .tab-btn {
-    background:none; border:none; border-bottom:2px solid transparent;
-    padding:8px 12px; font-size:13px; cursor:pointer; color:var(--text2);
-    font-family:inherit; margin-bottom:-0.5px; white-space:nowrap; flex-shrink:0;
-  }
+  .tabs { display:flex; border-bottom:0.5px solid var(--border); margin-bottom:20px; overflow-x:auto; }
+  .tab-btn { background:none; border:none; border-bottom:2px solid transparent; padding:8px 11px; font-size:13px; cursor:pointer; color:var(--text2); font-family:inherit; margin-bottom:-0.5px; white-space:nowrap; flex-shrink:0; }
   .tab-btn.active { border-bottom-color:var(--p400); color:var(--text); font-weight:500; }
-
   .view { display:none; }
   .view.active { display:block; }
 
   /* fortune */
   .fortune-wrap { text-align:center; padding:4px 0 8px; }
-  .fortune-jar {
-    width:80px; height:80px; border-radius:50%;
-    background:var(--t50); border:0.5px solid var(--t200);
-    display:flex; align-items:center; justify-content:center;
-    margin:0 auto 8px; font-size:36px; cursor:pointer;
-    transition:transform 0.15s; user-select:none;
-  }
+  .fortune-jar { width:80px; height:80px; border-radius:50%; background:var(--t50); border:0.5px solid var(--t200); display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-size:36px; cursor:pointer; transition:transform 0.15s; user-select:none; }
   .fortune-jar:hover { transform:scale(1.06); }
   .fortune-jar:active { transform:scale(0.95); }
   .fortune-jar.shaking { animation:shake 0.5s ease; }
-  @keyframes shake {
-    0%{transform:rotate(0deg) scale(1.05)} 20%{transform:rotate(-8deg) scale(1.08)}
-    40%{transform:rotate(8deg) scale(1.08)} 60%{transform:rotate(-5deg) scale(1.06)}
-    80%{transform:rotate(5deg) scale(1.05)} 100%{transform:rotate(0deg) scale(1)}
-  }
+  @keyframes shake { 0%{transform:rotate(0deg) scale(1.05)} 20%{transform:rotate(-8deg) scale(1.08)} 40%{transform:rotate(8deg) scale(1.08)} 60%{transform:rotate(-5deg) scale(1.06)} 80%{transform:rotate(5deg) scale(1.05)} 100%{transform:rotate(0deg) scale(1)} }
   .fortune-hint { font-size:12px; color:var(--text3); margin-bottom:16px; }
-  .fortune-card {
-    background:var(--t50); border:0.5px solid var(--t200); border-radius:var(--radius-lg);
-    padding:18px 16px; margin-bottom:10px; text-align:left;
-    opacity:0; transform:translateY(8px); transition:opacity 0.4s,transform 0.4s;
-  }
+  .fortune-card { background:var(--t50); border:0.5px solid var(--t200); border-radius:var(--radius-lg); padding:18px 16px; margin-bottom:10px; text-align:left; opacity:0; transform:translateY(8px); transition:opacity 0.4s,transform 0.4s; }
   .fortune-card.show { opacity:1; transform:translateY(0); }
   .fortune-rank { display:inline-block; font-size:11px; font-weight:500; padding:2px 10px; border-radius:20px; margin-bottom:10px; }
   .rank-best  { background:var(--a50); color:var(--a600); border:0.5px solid var(--a200); }
@@ -106,69 +73,49 @@
   .redraw-btn { width:100%; background:none; border:0.5px solid var(--border2); border-radius:var(--radius-md); padding:8px; font-size:13px; color:var(--text2); cursor:pointer; font-family:inherit; margin-top:4px; }
   .redraw-btn:hover { background:var(--bg2); }
 
-  /* mood record */
+  /* record */
+  .nickname-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .nickname-tag { font-size:12px; color:var(--text2); background:var(--bg2); border:0.5px solid var(--border); border-radius:20px; padding:3px 10px; }
+  .change-nick-btn { font-size:12px; color:var(--text3); background:none; border:none; cursor:pointer; font-family:inherit; }
+  .change-nick-btn:hover { color:var(--text2); }
   .mood-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:14px; }
-  .mood-btn {
-    background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius-lg);
-    padding:10px 6px; cursor:pointer; display:flex; flex-direction:column;
-    align-items:center; gap:5px; font-family:inherit; transition:border-color 0.15s,background 0.15s;
-  }
+  .mood-btn { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:10px 6px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:5px; font-family:inherit; transition:border-color 0.15s,background 0.15s; }
   .mood-btn:hover { border-color:var(--border2); background:var(--bg); }
   .mood-btn.selected { border:2px solid var(--p200); background:var(--p50); }
   .mood-emoji { font-size:24px; line-height:1; }
   .mood-label { font-size:11px; color:var(--text3); }
   .mood-btn.selected .mood-label { color:var(--p600); }
-
-  .note-input {
-    width:100%; background:var(--bg2); border:0.5px solid var(--border);
-    border-radius:var(--radius-md); padding:10px 12px; font-size:13px;
-    color:var(--text); font-family:inherit; resize:none; outline:none;
-  }
+  .note-input { width:100%; background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius-md); padding:10px 12px; font-size:13px; color:var(--text); font-family:inherit; resize:none; outline:none; }
   .note-input:focus { border-color:var(--border2); }
   .note-input::placeholder { color:var(--text3); }
-
-  .public-toggle {
-    display:flex; align-items:center; gap:8px; margin-top:10px;
-    font-size:13px; color:var(--text2); cursor:pointer; user-select:none;
-  }
-  .toggle-box {
-    width:36px; height:20px; border-radius:10px; background:var(--border2);
-    position:relative; transition:background 0.2s; flex-shrink:0;
-  }
+  .public-toggle { display:flex; align-items:center; gap:8px; margin-top:10px; font-size:13px; color:var(--text2); cursor:pointer; user-select:none; }
+  .toggle-box { width:36px; height:20px; border-radius:10px; background:var(--border2); position:relative; transition:background 0.2s; flex-shrink:0; }
   .toggle-box.on { background:var(--t400); }
-  .toggle-dot {
-    width:16px; height:16px; border-radius:50%; background:white;
-    position:absolute; top:2px; left:2px; transition:left 0.2s;
-  }
+  .toggle-dot { width:16px; height:16px; border-radius:50%; background:white; position:absolute; top:2px; left:2px; transition:left 0.2s; }
   .toggle-box.on .toggle-dot { left:18px; }
-
-  .save-btn {
-    width:100%; margin-top:12px; background:var(--p50); border:0.5px solid var(--p200);
-    border-radius:var(--radius-md); padding:10px; font-size:14px; font-weight:500;
-    color:var(--p800); cursor:pointer; font-family:inherit;
-  }
+  .save-btn { width:100%; margin-top:12px; background:var(--p50); border:0.5px solid var(--p200); border-radius:var(--radius-md); padding:10px; font-size:14px; font-weight:500; color:var(--p800); cursor:pointer; font-family:inherit; }
   .save-btn:hover { background:var(--p200); }
   .save-btn:active { transform:scale(0.98); }
   .save-msg { font-size:12px; color:var(--p600); text-align:center; min-height:20px; margin-top:8px; }
 
-  /* team wall */
+  /* team */
   .team-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:0.5px solid var(--border); }
   .team-row:last-child { border-bottom:none; }
   .avatar { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:500; flex-shrink:0; }
   .team-name { font-size:13px; font-weight:500; }
-  .team-note { font-size:12px; color:var(--text3); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:180px; }
+  .team-note { font-size:12px; color:var(--text3); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px; }
   .team-emoji-big { font-size:26px; flex-shrink:0; }
-  .team-time { font-size:11px; color:var(--text3); margin-left:auto; flex-shrink:0; }
 
   /* bulletin */
   .bulletin-post { padding:14px 0; border-bottom:0.5px solid var(--border); }
   .bulletin-post:last-child { border-bottom:none; }
   .bulletin-tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; background:var(--p50); color:var(--p600); border:0.5px solid var(--p200); margin-bottom:6px; }
+  .bulletin-link { display:inline-block; font-size:11px; padding:2px 10px; border-radius:20px; background:var(--t50); color:var(--t600); border:0.5px solid var(--t200); margin-bottom:6px; text-decoration:none; }
   .bulletin-title { font-size:14px; font-weight:500; margin-bottom:4px; }
   .bulletin-content { font-size:13px; color:var(--text2); line-height:1.7; }
   .bulletin-date { font-size:11px; color:var(--text3); margin-top:6px; }
 
-  /* chart */
+  /* log */
   .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
   .stat-card { background:var(--bg2); border-radius:var(--radius-md); padding:12px 8px; text-align:center; }
   .stat-num { font-size:22px; font-weight:500; }
@@ -179,32 +126,21 @@
   .bar-emoji-sm { font-size:10px; height:14px; text-align:center; }
   .bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
   .bar-day { font-size:9px; color:var(--text3); margin-top:3px; }
-
-  /* log */
-  .log-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:0.5px solid var(--border); }
+  .log-row { display:flex; align-items:center; gap:8px; padding:10px 0; border-bottom:0.5px solid var(--border); }
   .log-row:last-child { border-bottom:none; }
-  .log-date { color:var(--text2); font-size:12px; min-width:60px; }
-  .log-emoji { font-size:20px; }
-  .log-mood-lbl { font-size:12px; color:var(--text2); min-width:48px; }
+  .log-date { color:var(--text2); font-size:12px; min-width:58px; flex-shrink:0; }
+  .log-emoji { font-size:20px; flex-shrink:0; }
+  .log-mood-lbl { font-size:12px; color:var(--text2); min-width:44px; flex-shrink:0; }
   .log-note { font-size:12px; color:var(--text3); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .log-pub { font-size:10px; color:var(--t600); background:var(--t50); border-radius:4px; padding:1px 5px; flex-shrink:0; }
-  .del-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:16px; padding:2px 6px; border-radius:4px; font-family:inherit; }
+  .del-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:16px; padding:2px 4px; border-radius:4px; font-family:inherit; flex-shrink:0; }
   .del-btn:hover { color:var(--text2); background:var(--bg2); }
 
-  /* misc */
   .empty-hint { color:var(--text3); font-size:13px; text-align:center; padding:28px 0; }
+  .loading-hint { color:var(--text3); font-size:12px; text-align:center; padding:20px 0; }
   .section-head { font-size:13px; font-weight:500; margin-bottom:12px; }
-  .loading-hint { color:var(--text3); font-size:12px; text-align:center; padding:16px 0; }
-  .nickname-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-  .nickname-tag { font-size:12px; color:var(--text2); background:var(--bg2); border:0.5px solid var(--border); border-radius:20px; padding:3px 10px; }
-  .change-nick-btn { font-size:12px; color:var(--text3); background:none; border:none; cursor:pointer; font-family:inherit; }
-  .change-nick-btn:hover { color:var(--text2); }
   .hidden { display:none !important; }
-  .primary-btn {
-    width:100%; background:var(--p400); border:none; border-radius:var(--radius-md);
-    padding:11px; font-size:14px; font-weight:500; color:white;
-    cursor:pointer; font-family:inherit;
-  }
+  .primary-btn { width:100%; background:var(--p400); border:none; border-radius:var(--radius-md); padding:11px; font-size:14px; font-weight:500; color:white; cursor:pointer; font-family:inherit; }
   .primary-btn:hover { background:var(--p600); }
   .primary-btn:active { transform:scale(0.98); }
 </style>
@@ -218,11 +154,11 @@
   </div>
 
   <!-- 暱稱設定 -->
-  <div id="setup-screen">
+  <div id="setup-screen" class="hidden">
     <div class="setup-card">
       <div class="setup-emoji">👋</div>
       <div class="setup-title">歡迎來到邁斯朋友心情日記</div>
-      <div class="setup-sub">請輸入你的暱稱，之後就不用再填了！</div>
+      <div class="setup-sub">請輸入你的暱稱<br>之後就不用再填了！</div>
       <input class="setup-input" id="nickname-input" type="text" placeholder="你的暱稱" maxlength="10">
       <button class="primary-btn" onclick="confirmNickname()">開始使用</button>
     </div>
@@ -270,7 +206,7 @@
         </div>
         <textarea class="note-input" id="note-input" rows="2" placeholder="今天發生什麼事？（選填）"></textarea>
         <label class="public-toggle" onclick="togglePublic()">
-          <div class="toggle-box" id="public-toggle-box"><div class="toggle-dot"></div></div>
+          <div class="toggle-box on" id="public-toggle-box"><div class="toggle-dot"></div></div>
           <span id="public-label">公開給大家看</span>
         </label>
         <button class="save-btn" id="save-btn" onclick="saveRecord()">儲存今天的心情</button>
@@ -294,9 +230,8 @@
         <p class="section-head">本月每日心情</p>
         <div class="bar-chart-wrap"><div class="bar-chart" id="bar-chart"></div></div>
         <p class="section-head" style="margin-top:20px;">歷史紀錄</p>
-        <div id="log-list"></div>
+        <div id="log-list"><div class="loading-hint">載入中...</div></div>
       </div>
-
     </div>
   </div>
 </div>
@@ -306,8 +241,8 @@ const API = 'https://script.google.com/macros/s/AKfycbwEyPRAfWSnLRCdqbyEdlNsJcLo
 const MOODS  = {5:'😄',4:'🙂',3:'😐',2:'😩',1:'😭'};
 const LABELS = {5:'開心',4:'還好',3:'普通',2:'有點累',1:'好累喔'};
 const BAR_COLORS = {5:'#1D9E75',4:'#7F77DD',3:'#888780',2:'#EF9F27',1:'#E24B4A'};
-const AVATAR_COLORS = ['#EEEDFE','#E1F5EE','#FAEEDA','#FBEAF0','#E6F1FB'];
-const AVATAR_TEXT   = ['#534AB7','#0F6E56','#854F0B','#993556','#185FA5'];
+const AVATAR_BG   = ['#EEEDFE','#E1F5EE','#FAEEDA','#FBEAF0','#E6F1FB'];
+const AVATAR_TEXT = ['#534AB7','#0F6E56','#854F0B','#993556','#185FA5'];
 
 const FORTUNES = [
   {rank:'天選之日',rankClass:'rank-best',main:'今天的你，擋都擋不住',detail:'所有電話都接得順，所有候選人都回覆，所有店長都好說話。這種天選之日，好好把握！',advice:'建議：把最難搞的那通電話排在今天打。'},
@@ -330,17 +265,19 @@ const FORTUNES = [
 let nickname = '';
 let selectedMood = null;
 let isPublic = true;
-let localRecords = [];
+let myRecords = [];
+let teamRecords = [];
 
 function getTodayKey() {
   const d = new Date();
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
-function loadLocal() {
-  try { localRecords = JSON.parse(localStorage.getItem('msp_mood_v2')||'[]'); } catch(e){ localRecords=[]; }
+function avatarColor(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h*31 + name.charCodeAt(i)) % AVATAR_BG.length;
+  return { bg: AVATAR_BG[h], text: AVATAR_TEXT[h] };
 }
-function saveLocal() { localStorage.setItem('msp_mood_v2', JSON.stringify(localRecords)); }
 
 function confirmNickname() {
   const val = document.getElementById('nickname-input').value.trim();
@@ -361,14 +298,9 @@ function showMain() {
   document.getElementById('setup-screen').classList.add('hidden');
   document.getElementById('main-screen').classList.remove('hidden');
   document.getElementById('nickname-display').textContent = '👤 ' + nickname;
-  renderTodayState();
+  fetchMyMoods();
+  fetchBulletin();
   switchTab('fortune');
-}
-
-function avatarColor(name) {
-  let h = 0;
-  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % AVATAR_COLORS.length;
-  return { bg: AVATAR_COLORS[h], text: AVATAR_TEXT[h] };
 }
 
 function selectMood(btn) {
@@ -385,32 +317,24 @@ function togglePublic() {
 
 function saveRecord() {
   if (!selectedMood) { showMsg('請先選一個心情喔 ~'); return; }
-  const key = getTodayKey();
+  const key  = getTodayKey();
   const note = document.getElementById('note-input').value.trim();
-  const rec = { date: key, mood: selectedMood, note, isPublic };
-
-  const idx = localRecords.findIndex(r => r.date === key);
-  if (idx >= 0) localRecords[idx] = rec; else localRecords.push(rec);
-  localRecords.sort((a,b) => b.date.localeCompare(a.date));
-  saveLocal();
-
-  document.getElementById('save-btn').textContent = '儲存中...';
-  document.getElementById('save-btn').disabled = true;
+  const btn  = document.getElementById('save-btn');
+  btn.textContent = '儲存中...'; btn.disabled = true;
 
   fetch(API, {
-    method: 'POST',
+    method:'POST',
     body: JSON.stringify({ action:'saveMood', nickname, date:key, mood:selectedMood, note, isPublic })
   })
   .then(r => r.json())
   .then(() => {
     showMsg('已儲存！' + MOODS[selectedMood]);
-    document.getElementById('save-btn').textContent = '更新今天的心情';
-    document.getElementById('save-btn').disabled = false;
+    btn.textContent = '更新今天的心情'; btn.disabled = false;
+    fetchMyMoods();
   })
   .catch(() => {
     showMsg('儲存失敗，請稍後再試');
-    document.getElementById('save-btn').textContent = '儲存今天的心情';
-    document.getElementById('save-btn').disabled = false;
+    btn.textContent = '儲存今天的心情'; btn.disabled = false;
   });
 }
 
@@ -420,9 +344,43 @@ function showMsg(t) {
   setTimeout(() => { el.textContent = ''; }, 2500);
 }
 
+function fetchMyMoods() {
+  fetch(API + '?action=getMyMoods&nickname=' + encodeURIComponent(nickname))
+    .then(r => r.json())
+    .then(data => {
+      myRecords = data.records || [];
+      renderTodayState();
+      if (document.getElementById('view-log').classList.contains('active')) renderLog();
+    })
+    .catch(() => { myRecords = []; });
+}
+
+function fetchTeam() {
+  document.getElementById('team-list').innerHTML = '<div class="loading-hint">載入中...</div>';
+  fetch(API + '?action=getMoods')
+    .then(r => r.json())
+    .then(data => { teamRecords = data.records || []; renderTeam(); })
+    .catch(() => { teamRecords = []; renderTeam(); });
+}
+
+function fetchBulletin() {
+  fetch(API + '?action=getBulletin')
+    .then(r => r.json())
+    .then(data => renderBulletin(data.posts || []))
+    .catch(() => renderBulletin([]));
+}
+
 function renderTodayState() {
-  const rec = localRecords.find(r => r.date === getTodayKey());
-  if (!rec) { isPublic = true; document.getElementById('public-toggle-box').classList.add('on'); return; }
+  const rec = myRecords.find(r => String(r.date) === getTodayKey());
+  if (!rec) {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+    selectedMood = null; isPublic = true;
+    document.getElementById('public-toggle-box').classList.add('on');
+    document.getElementById('public-label').textContent = '公開給大家看';
+    document.getElementById('note-input').value = '';
+    document.getElementById('save-btn').textContent = '儲存今天的心情';
+    return;
+  }
   document.querySelectorAll('.mood-btn').forEach(b => b.classList.toggle('selected', parseInt(b.dataset.val) === rec.mood));
   selectedMood = rec.mood;
   document.getElementById('note-input').value = rec.note || '';
@@ -432,16 +390,15 @@ function renderTodayState() {
   document.getElementById('save-btn').textContent = '更新今天的心情';
 }
 
-function renderTeam(records) {
+function renderTeam() {
   const el = document.getElementById('team-list');
   const today = getTodayKey();
-  const todayRecs = records.filter(r => r.date === today && r.isPublic);
+  const todayRecs = teamRecords.filter(r => String(r.date) === today && r.isPublic);
   if (!todayRecs.length) { el.innerHTML = '<div class="empty-hint">今天還沒有人記錄心情，你來第一個！</div>'; return; }
   el.innerHTML = todayRecs.map(r => {
     const c = avatarColor(r.nickname);
-    const initials = r.nickname.slice(0,1);
     return `<div class="team-row">
-      <div class="avatar" style="background:${c.bg};color:${c.text}">${initials}</div>
+      <div class="avatar" style="background:${c.bg};color:${c.text}">${r.nickname.slice(0,1)}</div>
       <div style="flex:1;min-width:0">
         <div class="team-name">${r.nickname}</div>
         ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
@@ -451,18 +408,15 @@ function renderTeam(records) {
   }).join('');
 }
 
-function isUrl(s) { return /^https?:\/\//.test(s); }
-
 function renderBulletin(posts) {
   const el = document.getElementById('bulletin-list');
-  if (!posts || !posts.length) { el.innerHTML = '<div class="empty-hint">佈告欄目前沒有內容</div>'; return; }
+  if (!posts.length) { el.innerHTML = '<div class="empty-hint">佈告欄目前沒有內容</div>'; return; }
   el.innerHTML = posts.map(p => {
-    let tagHtml = '';
-    if (p.tag) {
-      tagHtml = isUrl(p.tag)
-        ? `<a href="${p.tag}" target="_blank" style="display:inline-block;font-size:11px;padding:2px 10px;border-radius:20px;background:var(--t50);color:var(--t600);border:0.5px solid var(--t200);margin-bottom:6px;text-decoration:none;">開啟連結</a>`
-        : `<span class="bulletin-tag">${p.tag}</span>`;
-    }
+    const isUrl = /^https?:\/\//.test(p.tag);
+    const tagHtml = p.tag
+      ? (isUrl ? `<a class="bulletin-link" href="${p.tag}" target="_blank">開啟連結</a>`
+                : `<span class="bulletin-tag">${p.tag}</span>`)
+      : '';
     return `<div class="bulletin-post">
       ${tagHtml}
       <div class="bulletin-title">${p.title}</div>
@@ -475,36 +429,36 @@ function renderBulletin(posts) {
 function renderLog() {
   const now = new Date();
   const ym = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-  const monthRecs = localRecords.filter(r => r.date.startsWith(ym));
+  const monthRecs = myRecords.filter(r => String(r.date).startsWith(ym));
   const statsEl = document.getElementById('stats-row');
 
   if (!monthRecs.length) {
     statsEl.innerHTML = '';
     document.getElementById('bar-chart').innerHTML = '<div class="empty-hint">本月還沒有紀錄</div>';
   } else {
-    const avg = monthRecs.reduce((s,r)=>s+r.mood,0)/monthRecs.length;
-    const best = monthRecs.reduce((a,b)=>a.mood>=b.mood?a:b);
-    const worst = monthRecs.reduce((a,b)=>a.mood<=b.mood?a:b);
+    const avg   = monthRecs.reduce((s,r)=>s+Number(r.mood),0)/monthRecs.length;
+    const best  = monthRecs.reduce((a,b)=>Number(a.mood)>=Number(b.mood)?a:b);
+    const worst = monthRecs.reduce((a,b)=>Number(a.mood)<=Number(b.mood)?a:b);
     statsEl.innerHTML = `
       <div class="stat-card"><div class="stat-num">${avg.toFixed(1)}</div><div class="stat-lbl">本月平均心情</div></div>
-      <div class="stat-card"><div class="stat-num">${MOODS[best.mood]}</div><div class="stat-lbl">最好那天<br>${best.date.slice(5)}</div></div>
-      <div class="stat-card"><div class="stat-num">${MOODS[worst.mood]}</div><div class="stat-lbl">最累那天<br>${worst.date.slice(5)}</div></div>`;
+      <div class="stat-card"><div class="stat-num">${MOODS[best.mood]}</div><div class="stat-lbl">最好那天<br>${String(best.date).slice(5)}</div></div>
+      <div class="stat-card"><div class="stat-num">${MOODS[worst.mood]}</div><div class="stat-lbl">最累那天<br>${String(worst.date).slice(5)}</div></div>`;
     const daysInMonth = new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
     const bars = [];
     for (let d=1;d<=Math.min(daysInMonth,now.getDate());d++) {
       const key=ym+'-'+String(d).padStart(2,'0');
-      bars.push({d,rec:monthRecs.find(r=>r.date===key)});
+      bars.push({d, rec:monthRecs.find(r=>String(r.date)===key)});
     }
     document.getElementById('bar-chart').innerHTML = bars.map(({d,rec})=>{
-      const h=rec?Math.round((rec.mood/5)*72):4;
+      const h=rec?Math.round((Number(rec.mood)/5)*72):4;
       const color=rec?BAR_COLORS[rec.mood]:'var(--border)';
       return `<div class="bar-col"><div class="bar-emoji-sm">${rec?MOODS[rec.mood]:''}</div><div class="bar" style="height:${h}px;background:${color}"></div><div class="bar-day">${d}</div></div>`;
     }).join('');
   }
 
   const logEl = document.getElementById('log-list');
-  if (!localRecords.length) { logEl.innerHTML = '<div class="empty-hint">還沒有紀錄</div>'; return; }
-  logEl.innerHTML = localRecords.slice(0,60).map(r=>`
+  if (!myRecords.length) { logEl.innerHTML = '<div class="empty-hint">還沒有紀錄</div>'; return; }
+  logEl.innerHTML = myRecords.slice(0,60).map(r=>`
     <div class="log-row">
       <span class="log-date">${r.date}</span>
       <span class="log-emoji">${MOODS[r.mood]}</span>
@@ -515,9 +469,15 @@ function renderLog() {
     </div>`).join('');
 }
 
-function deleteRecord(key) {
-  localRecords = localRecords.filter(r=>r.date!==key);
-  saveLocal(); renderLog();
+function deleteRecord(date) {
+  if (!confirm('確定刪除 '+date+' 的紀錄嗎？')) return;
+  fetch(API, {
+    method:'POST',
+    body: JSON.stringify({ action:'deleteMood', nickname, date })
+  })
+  .then(r => r.json())
+  .then(() => fetchMyMoods())
+  .catch(() => alert('刪除失敗，請稍後再試'));
 }
 
 function drawFortune() {
@@ -539,40 +499,22 @@ function drawFortune() {
   },520);
 }
 
-let remoteData = null;
-
-function fetchRemote() {
-  fetch(API+'?action=getMoods')
-    .then(r=>r.json())
-    .then(data=>{ remoteData = data.records || []; })
-    .catch(()=>{ remoteData = []; });
-  fetch(API+'?action=getBulletin')
-    .then(r=>r.json())
-    .then(data=>{ renderBulletin(data.posts||[]); })
-    .catch(()=>{ renderBulletin([]); });
-}
-
 function switchTab(name) {
-  ['fortune','record','team','bulletin','log'].forEach(t=>{
+  ['fortune','record','team','bulletin','log'].forEach(t => {
     document.getElementById('view-'+t).classList.toggle('active', t===name);
     document.getElementById('tab-'+t).classList.toggle('active', t===name);
   });
-  if (name==='team') {
-    if (remoteData) renderTeam(remoteData);
-    else { document.getElementById('team-list').innerHTML='<div class="loading-hint">載入中...</div>'; fetch(API+'?action=getMoods').then(r=>r.json()).then(d=>{remoteData=d.records||[];renderTeam(remoteData);}).catch(()=>renderTeam([])); }
-  }
-  if (name==='log') renderLog();
+  if (name==='team') fetchTeam();
+  if (name==='log')  renderLog();
 }
 
 const d = new Date();
-document.getElementById('today-label').textContent = d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月 '+d.getDate()+' 日';
+document.getElementById('today-label').textContent =
+  d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月 '+d.getDate()+' 日';
 
-loadLocal();
 nickname = localStorage.getItem('msp_nickname') || '';
 if (nickname) showMain();
-else { document.getElementById('setup-screen').classList.remove('hidden'); }
-
-nickname && fetchRemote();
+else document.getElementById('setup-screen').classList.remove('hidden');
 </script>
 </body>
 </html>
