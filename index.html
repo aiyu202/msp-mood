@@ -451,16 +451,25 @@ function renderTeam(records) {
   }).join('');
 }
 
+function isUrl(s) { return /^https?:\/\//.test(s); }
+
 function renderBulletin(posts) {
   const el = document.getElementById('bulletin-list');
   if (!posts || !posts.length) { el.innerHTML = '<div class="empty-hint">佈告欄目前沒有內容</div>'; return; }
-  el.innerHTML = posts.map(p => `
-    <div class="bulletin-post">
-      ${p.tag ? `<span class="bulletin-tag">${p.tag}</span>` : ''}
+  el.innerHTML = posts.map(p => {
+    let tagHtml = '';
+    if (p.tag) {
+      tagHtml = isUrl(p.tag)
+        ? `<a href="${p.tag}" target="_blank" style="display:inline-block;font-size:11px;padding:2px 10px;border-radius:20px;background:var(--t50);color:var(--t600);border:0.5px solid var(--t200);margin-bottom:6px;text-decoration:none;">開啟連結</a>`
+        : `<span class="bulletin-tag">${p.tag}</span>`;
+    }
+    return `<div class="bulletin-post">
+      ${tagHtml}
       <div class="bulletin-title">${p.title}</div>
       <div class="bulletin-content">${p.content.replace(/\n/g,'<br>')}</div>
       <div class="bulletin-date">${p.date}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderLog() {
