@@ -67,6 +67,7 @@
   .rank-good  { background:var(--p50); color:var(--p600); border:0.5px solid var(--p200); }
   .rank-ok    { background:var(--bg2); color:var(--text2); border:0.5px solid var(--border2); }
   .rank-learn { background:var(--bg2); color:var(--text2); border:0.5px solid var(--border2); }
+  .rank-joke  { background:#FFF3E0; color:#E65100; border:0.5px solid #FFCC80; }
   .fortune-main { font-size:15px; font-weight:500; color:var(--t800); margin-bottom:8px; line-height:1.5; }
   .fortune-detail { font-size:13px; color:var(--text2); line-height:1.7; margin-bottom:10px; }
   .fortune-advice { font-size:12px; color:var(--t600); background:var(--bg); border-radius:var(--radius-md); padding:8px 12px; border:0.5px solid var(--t200); }
@@ -252,21 +253,67 @@ const AVATAR_BG   = ['#EEEDFE','#E1F5EE','#FAEEDA','#FBEAF0','#E6F1FB'];
 const AVATAR_TEXT = ['#534AB7','#0F6E56','#854F0B','#993556','#185FA5'];
 
 const FORTUNES = [
+  // 天選之日 (2)
   {rank:'天選之日',rankClass:'rank-best',main:'今天的你，擋都擋不住',detail:'所有電話都接得順，所有候選人都回覆，所有店長都好說話。這種天選之日，好好把握！',advice:'建議：把最難搞的那通電話排在今天打。'},
+  {rank:'天選之日',rankClass:'rank-best',main:'今天你說什麼，對方都答應',detail:'不知道是水星順行還是你氣場太強，今天談什麼都順，連一直推說沒空的候選人都秒回了。',advice:'建議：今天適合提任何長期卡關的事，趁勝追擊。'},
+
+  // 大吉 (5)
   {rank:'大吉',rankClass:'rank-great',main:'貴人就在你左右，機會悄悄敲門',detail:'今天會遇到意想不到的好消息，可能是一個久未聯繫的候選人主動回頭，也可能是合作夥伴帶來驚喜。',advice:'建議：多跟同事說說話，好事就藏在聊天裡。'},
   {rank:'大吉',rankClass:'rank-great',main:'今日財運旺，業績說不定有驚喜',detail:'數字這種東西，有時候一整個月卡住，然後某一天突然全開。今天就是那個候選日。',advice:'建議：把之前沒追上的名單掃一輪，說不定有人在等你。'},
   {rank:'大吉',rankClass:'rank-great',main:'你就是今天團隊裡最強的那個',detail:'不是每天都需要被看見，但今天你的存在對周圍的人來說真的很重要。你的穩定，是大家的定心丸。',advice:'建議：有什麼想分享的知識或技巧，今天說出來。'},
+  {rank:'大吉',rankClass:'rank-great',main:'今天的你自帶BGM，走路有風',detail:'不知道是換了新衣服還是睡得特別好，今天整個人的狀態超好，連講話都特別有底氣。',advice:'建議：今天適合跟重要客戶或合作方通話，印象分加倍。'},
+  {rank:'大吉',rankClass:'rank-great',main:'好消息正在趕來的路上',detail:'有些事情需要時間醞釀，但今天那股等待的氛圍特別不一樣——像是快開獎前的感覺。',advice:'建議：保持手機暢通，好事通常在你不盯著的時候出現。'},
+
+  // 吉 (10)
   {rank:'吉',rankClass:'rank-good',main:'穩穩當當，每一步都算數',detail:'今天不求大爆發，但每一件做完的小事都在累積能量。認真打出去的每一通電話，都是在為未來鋪路。',advice:'建議：把待辦清單整理一下，劃掉幾項，會很有成就感。'},
   {rank:'吉',rankClass:'rank-good',main:'心靜則萬事順，今天適合深呼吸',detail:'外在再忙，內心保持一片清明，事情就會自然理順。遇到煩人的事，先喝口水，再說。',advice:'建議：午休時離開座位走走，充個電。'},
   {rank:'吉',rankClass:'rank-good',main:'你的努力，比你以為的還要值錢',detail:'顧問這份工常常付出看不見回報，但今天的籤提醒你：你做的每一件事，都有它的重量和價值。',advice:'建議：今天可以對自己好一點，下班吃個想吃的東西。'},
   {rank:'吉',rankClass:'rank-good',main:'說出口的話，今天特別有力量',detail:'今天你的表達能力在線上，和候選人溝通、和店長協調，說出來的話都比平時更清楚有說服力。',advice:'建議：把一直拖著沒打的那通電話，今天打掉它。'},
   {rank:'吉',rankClass:'rank-good',main:'你記得的每個人，都記得你',detail:'你認真對待每一位候選人、每一個店長、每一位同事——這些善意都在循環，早晚會回到你身上。',advice:'建議：今天可以傳一句話給許久沒聯絡的朋友。'},
   {rank:'吉',rankClass:'rank-good',main:'細節裡藏著今天的好運',detail:'今天的好事不會大張旗鼓，而是藏在一封回覆的訊息、一個確認的班表、一句「謝謝你」裡面。',advice:'建議：今天注意那些小小的好事，它們值得被看見。'},
+  {rank:'吉',rankClass:'rank-good',main:'今天適合建立關係，不只是完成任務',detail:'工作固然重要，但今天的籤提醒你：多問一句「最近還好嗎」，有時候比送一份履歷還有價值。',advice:'建議：今天聯繫一個你很久沒問候的合作夥伴。'},
+  {rank:'吉',rankClass:'rank-good',main:'你的細心，今天會被看見',detail:'那些你以為沒人注意的小事——確認一遍班表、多跟進一通電話——今天都會有人感謝你。',advice:'建議：把容易遺漏的細節再確認一遍，今天值得。'},
+  {rank:'吉',rankClass:'rank-good',main:'今天是充電日，能量滿格出發',detail:'有時候最高效的一天，是從讓自己狀態好開始的。今天先把自己照顧好，其他的事自然跟上。',advice:'建議：今天從最喜歡的那件工作開始，找回節奏。'},
+  {rank:'吉',rankClass:'rank-good',main:'同事是你今天最強的後盾',detail:'一個人可以走得快，一群人可以走得遠。今天有什麼卡關的事，試著開口問問旁邊的人。',advice:'建議：有問題別悶著，說出來說不定三分鐘就解決了。'},
+
+  // 小吉 (6)
   {rank:'小吉',rankClass:'rank-ok',main:'今天適合播種，不急著看收成',detail:'事情推進可能比預期慢，但方向是對的。不要因為暫時的停滯就灰心，很多事情需要時間發酵。',advice:'建議：先做容易的，累積動能，再挑戰難的。'},
   {rank:'小吉',rankClass:'rank-ok',main:'雲層後面是晴天，再等一下下',detail:'今天可能有些小摩擦或等待，但這都是暫時的。保持耐心，不要讓小事影響整體心情。',advice:'建議：遇到卡關先擱著，去做別的，等等回來說不定就通了。'},
   {rank:'小吉',rankClass:'rank-ok',main:'休息也是工作的一部分',detail:'顧問總是把別人的事排在自己前面，但今天的籤提醒你：你自己也需要被照顧。能量充足才能照顧別人。',advice:'建議：今天不要硬撐，累了就停一下。'},
+  {rank:'小吉',rankClass:'rank-ok',main:'今天是整理的好日子',detail:'與其一直往前衝，不如花點時間把手邊的東西整理乾淨。清楚的桌面和資料夾，會讓腦袋跟著清晰。',advice:'建議：整理一下你的追蹤名單或信件匣，清理掉不必要的雜訊。'},
+  {rank:'小吉',rankClass:'rank-ok',main:'慢工出細活，今天不要求快',detail:'今天如果覺得效率不太好，那就乾脆放慢節奏，把每一件事做扎實。品質比速度更重要。',advice:'建議：今天選一件重要的事做好，不要同時開太多工。'},
+  {rank:'小吉',rankClass:'rank-ok',main:'小心說話，今天文字容易被誤解',detail:'今天溝通時多留意語氣，特別是文字訊息——沒有表情和語調，很容易讓人誤會你的意思。',advice:'建議：重要的事盡量電話講，比傳訊息安全。'},
+
+  // 學習籤 (12)
   {rank:'學習籤',rankClass:'rank-learn',main:'轉個彎，也許是更好的路',detail:'今天如果計畫被打亂，不一定是壞事。有時候繞路才能看見不同的風景，新的可能性就藏在意外之中。',advice:'建議：對今天的「意外」保持好奇心，說不定有意思。'},
-  {rank:'學習籤',rankClass:'rank-learn',main:'慢下來，才能看清楚方向',detail:'今天適合回頭整理，而不是一直往前衝。有時候暫停一下，重新確認目標，反而走得更快更穩。',advice:'建議：花十分鐘整理一下資料夾或追蹤名單，清清腦袋。'}
+  {rank:'學習籤',rankClass:'rank-learn',main:'慢下來，才能看清楚方向',detail:'今天適合回頭整理，而不是一直往前衝。有時候暫停一下，重新確認目標，反而走得更快更穩。',advice:'建議：花十分鐘整理一下資料夾或追蹤名單，清清腦袋。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'今天學到的，就是明天的底氣',detail:'每一次被問倒、每一次不確定，都是讓你往前進的機會。不懂沒關係，記下來去搞懂它。',advice:'建議：今天遇到不熟悉的東西，記下來，今晚查清楚。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'別人的反應，是最誠實的回饋',detail:'今天如果有人對你的方式有點反應，先不要防衛，試著聽進去。即使對方說得不好聽，裡面可能有真的有用的東西。',advice:'建議：今天收到任何反饋，先謝謝對方，再回去想想。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'期待管理，是顧問最重要的技能之一',detail:'答應別人之前，先確認自己做得到。給一個能實現的承諾，比給一個漂亮但落空的保證更有價值。',advice:'建議：今天有任何承諾，先在心裡確認一遍再說出口。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'情緒是信號，不是敵人',detail:'今天如果有點煩躁或沮喪，先別壓下去。停下來想一想，是哪件事讓你有這個感覺？找到原因才能真的解決。',advice:'建議：今天如果情緒來了，給自己五分鐘，不要馬上做決定。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'問問題，是最快的學習方式',detail:'今天不需要假裝什麼都懂。一個好問題，比悶頭苦想一小時更有效率，也讓對方覺得你在認真聽。',advice:'建議：今天有不確定的地方，直接開口問，不要猜。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'紀錄，讓你的努力看得見',detail:'做了什麼、解決了什麼、學到了什麼——這些如果不寫下來，就像沒發生過一樣。你的成長需要被記錄。',advice:'建議：今天睡前花三分鐘，寫下今天做了哪三件事。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'邊界感，是保護自己也保護別人',detail:'工作上有些事可以幫，有些事超出你的範圍。今天練習看清楚那條線，說「這個我需要確認一下」不是軟弱，是專業。',advice:'建議：今天如果有超出範圍的要求，先暫停確認，不要硬撐。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'換位思考，是解決問題的捷徑',detail:'今天如果有什麼溝通卡住了，試著站到對方的角度想：他在意的是什麼？他的顧慮是什麼？通常答案就在那裡。',advice:'建議：今天遇到僵局，先問自己「對方最擔心的是什麼」。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'失敗的案例，比成功的案例更值錢',detail:'出了問題不可怕，可怕的是沒有記錄下來、下次又犯同樣的錯。今天如果有什麼不順，把它寫下來。',advice:'建議：今天有任何出錯的事，記下來「下次怎麼避免」。'},
+  {rank:'學習籤',rankClass:'rank-learn',main:'你不需要完美，你需要到位',detail:'追求完美很好，但不要讓完美成為你遲遲不行動的藉口。做到位、做負責任，比做到完美更重要。',advice:'建議：今天有什麼一直沒出手的事，設個截止時間，就這樣出發。'},
+
+  // 冷笑話籤 (15)
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'為什麼派遣顧問不怕颱風假？',detail:'因為他們早就習慣「人來人去」了 🌀',advice:'今天心情輕鬆一點，笑一個再去工作！'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'HR面試問：你最大的缺點是什麼？',detail:'候選人回答：「我太誠實了。」HR說：「這不算缺點吧？」候選人說：「我不在乎你怎麼想。」😐',advice:'今天面試候選人，記得多留一點時間讓他說話。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'為什麼顧問的LINE通知永遠關不掉？',detail:'因為關掉的那一刻，就是重要訊息進來的那一刻 📱',advice:'今天先把最重要的一件事處理完，再看LINE。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'派遣人員問：我可以請假嗎？',detail:'顧問內心：「可以，但你知道我接下來三天要做什麼嗎。」😇',advice:'今天如果有突發請假，深呼吸，你處理得來的。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'為什麼招募顧問記性特別好？',detail:'因為每個候選人的故事都是獨一無二的連續劇 📺',advice:'今天把候選人的備註更新一下，讓記憶更可靠。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'勞基法小測驗：什麼情況下可以不給資遣費？',detail:'正確答案不是「他自己不要的」😂 記得確認離職類型！',advice:'今天遇到離職案件，先確認是自願離職還是資遣，再說話。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'面試官問：你有什麼問題想問我們嗎？',detail:'候選人：「請問加班費怎麼算？」面試官：「……我們很少加班。」候選人：「那請問加班費怎麼算？」🔄',advice:'今天記得在JD上把薪資福利寫清楚，省得大家都尷尬。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'什麼職業最了解人性？',detail:'招募顧問。因為他們知道：履歷上寫「抗壓性強」的人，通常壓力一來就消失了 🫠',advice:'今天面試，多問情境題，少信自我介紹。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'為什麼顧問的午餐總是吃很快？',detail:'因為他們深知「吃飯中」不是「不能接電話」的理由 📞',advice:'今天好好吃一頓午餐，手機放桌上就好，不用一直拿著。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'老闆說：我們公司文化很好！',detail:'員工心想：對，每次文化不好的人都自動離職了，所以剩下的人文化都很好 🙂',advice:'今天遇到文化不合的候選人，誠實說，對大家都好。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'什麼叫做「彈性上班」？',detail:'就是你彈進來，公司彈出去——別擔心，這個籤只是在開玩笑 😂',advice:'今天把上班時間好好利用，彈性是雙向的。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'候選人履歷寫：熟悉Office軟體',detail:'面試官打開Excel問他做個樞紐分析表……候選人：「我比較熟Word。」📄',advice:'今天面試記得實際測試一下技能，不只看履歷。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'為什麼AI取代不了招募顧問？',detail:'因為AI不會在候選人說「我再考慮看看」的時候，用眼神傳遞「你已經考慮三週了」的壓力 👁️',advice:'今天跟進候選人，語氣溫柔，但要問清楚時間表。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'勞工說：我要申訴！',detail:'顧問內心OS：好，讓我先把這半年的往來紀錄都找出來……（默默打開資料夾）📁',advice:'今天把重要溝通紀錄都存好，備而無患。'},
+  {rank:'冷笑話籤',rankClass:'rank-joke',main:'什麼人最適合做派遣顧問？',detail:'A. 抗壓性強 B. 溝通能力好 C. 記性好 D. 以上皆是。答案是D，但他們面試時只說了A 😏',advice:'今天也辛苦了，你同時擁有ABCD，值得被肯定。'}
 ];
 
 let nickname = '';
