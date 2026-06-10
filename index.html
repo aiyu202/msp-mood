@@ -222,7 +222,7 @@
 
       <!-- 大家的心情 -->
       <div class="view" id="view-team">
-        <p class="section-head">今天大家的心情</p>
+        <p class="section-head">大家的心情</p>
         <div id="team-list"><div class="loading-hint">載入中...</div></div>
       </div>
 
@@ -399,10 +399,9 @@ function renderTodayState() {
 
 function renderTeam() {
   const el = document.getElementById('team-list');
-  const today = getTodayKey();
-  const todayRecs = teamRecords.filter(r => String(r.date) === today && r.isPublic);
-  if (!todayRecs.length) { el.innerHTML = '<div class="empty-hint">今天還沒有人記錄心情，你來第一個！</div>'; return; }
-  el.innerHTML = todayRecs.map(r => {
+  const publicRecs = teamRecords.filter(r => r.isPublic);
+  if (!publicRecs.length) { el.innerHTML = '<div class="empty-hint">還沒有人公開心情，你來第一個！</div>'; return; }
+  el.innerHTML = publicRecs.map(r => {
     const c = avatarColor(r.nickname);
     return `<div class="team-row">
       <div class="avatar" style="background:${c.bg};color:${c.text}">${r.nickname.slice(0,1)}</div>
@@ -410,7 +409,10 @@ function renderTeam() {
         <div class="team-name">${r.nickname}</div>
         ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
       </div>
-      <div class="team-emoji-big">${MOODS[r.mood]}</div>
+      <div style="text-align:right;flex-shrink:0">
+        <div class="team-emoji-big">${MOODS[r.mood]}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">${String(r.date).slice(5)}</div>
+      </div>
     </div>`;
   }).join('');
 }
