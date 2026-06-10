@@ -110,11 +110,12 @@
   /* bulletin */
   .bulletin-post { padding:14px 0; border-bottom:0.5px solid var(--border); }
   .bulletin-post:last-child { border-bottom:none; }
-  .bulletin-tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; background:var(--p50); color:var(--p600); border:0.5px solid var(--p200); margin-bottom:6px; }
-  .bulletin-link { display:inline-block; font-size:11px; padding:2px 10px; border-radius:20px; background:var(--t50); color:var(--t600); border:0.5px solid var(--t200); margin-bottom:6px; text-decoration:none; }
-  .bulletin-title { font-size:14px; font-weight:500; margin-bottom:4px; }
+  .bulletin-meta { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+  .bulletin-tag { display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; background:var(--p50); color:var(--p600); border:0.5px solid var(--p200); }
+  .bulletin-date { font-size:11px; color:var(--text3); }
+  .bulletin-title { font-size:14px; font-weight:500; margin-bottom:6px; }
   .bulletin-content { font-size:13px; color:var(--text2); line-height:1.7; }
-  .bulletin-date { font-size:11px; color:var(--text3); margin-top:6px; }
+  .bulletin-link { display:inline-block; margin-top:8px; font-size:12px; color:var(--t600); text-decoration:none; border-bottom:0.5px solid var(--t200); }
 
   /* log */
   .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:20px; }
@@ -427,16 +428,14 @@ function renderBulletin(posts) {
   const el = document.getElementById('bulletin-list');
   if (!posts.length) { el.innerHTML = '<div class="empty-hint">佈告欄目前沒有內容</div>'; return; }
   el.innerHTML = posts.map(p => {
-    const isUrl = /^https?:\/\//.test(p.tag);
-    const tagHtml = p.tag
-      ? (isUrl ? `<a class="bulletin-link" href="${p.tag}" target="_blank">開啟連結</a>`
-                : `<span class="bulletin-tag">${p.tag}</span>`)
-      : '';
+    const tagHtml = p.tag ? `<span class="bulletin-tag">${p.tag}</span>` : '';
+    const linkHtml = p.link && /^https?:\/\//.test(p.link)
+      ? `<a class="bulletin-link" href="${p.link}" target="_blank">延伸閱讀 →</a>` : '';
     return `<div class="bulletin-post">
-      ${tagHtml}
+      <div class="bulletin-meta">${tagHtml}<span class="bulletin-date">${fmtDate(p.date)}</span></div>
       <div class="bulletin-title">${p.title}</div>
       <div class="bulletin-content">${p.content.replace(/\n/g,'<br>')}</div>
-      <div class="bulletin-date">${fmtDate(p.date)}</div>
+      ${linkHtml}
     </div>`;
   }).join('');
 }
