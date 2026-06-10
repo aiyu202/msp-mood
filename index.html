@@ -127,12 +127,18 @@
   .bar-emoji-sm { font-size:10px; height:14px; text-align:center; }
   .bar { width:100%; border-radius:3px 3px 0 0; min-height:4px; }
   .bar-day { font-size:9px; color:var(--text3); margin-top:3px; }
-  .log-row { display:flex; align-items:center; gap:6px; padding:10px 0; border-bottom:0.5px solid var(--border); }
+  .log-row { padding:10px 0; border-bottom:0.5px solid var(--border); cursor:pointer; }
   .log-row:last-child { border-bottom:none; }
-  .log-date { color:var(--text2); font-size:11px; min-width:52px; flex-shrink:0; }
+  .log-main { display:flex; align-items:center; gap:8px; }
+  .log-date { color:var(--text3); font-size:11px; flex-shrink:0; }
   .log-emoji { font-size:18px; flex-shrink:0; }
-  .log-mood-lbl { font-size:11px; color:var(--text2); min-width:40px; flex-shrink:0; }
-  .log-note { font-size:11px; color:var(--text3); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+  .log-note-preview { font-size:12px; color:var(--text2); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .log-pub { font-size:10px; color:var(--t600); background:var(--t50); border-radius:4px; padding:1px 5px; flex-shrink:0; }
+  .log-expand { font-size:11px; color:var(--text3); flex-shrink:0; }
+  .log-detail { font-size:12px; color:var(--text2); margin-top:6px; padding:8px 10px; background:var(--bg2); border-radius:var(--radius-md); line-height:1.6; display:none; }
+  .log-row.open .log-detail { display:block; }
+  .del-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:16px; padding:2px 4px; border-radius:4px; font-family:inherit; flex-shrink:0; }
+  .del-btn:hover { color:var(--text2); background:var(--bg2); }
   .log-pub { font-size:10px; color:var(--t600); background:var(--t50); border-radius:4px; padding:1px 5px; flex-shrink:0; }
   .del-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:16px; padding:2px 4px; border-radius:4px; font-family:inherit; flex-shrink:0; }
   .del-btn:hover { color:var(--text2); background:var(--bg2); }
@@ -467,14 +473,23 @@ function renderLog() {
   const logEl = document.getElementById('log-list');
   if (!myRecords.length) { logEl.innerHTML = '<div class="empty-hint">還沒有紀錄</div>'; return; }
   logEl.innerHTML = myRecords.slice(0,60).map(r=>`
-    <div class="log-row">
-      <span class="log-date">${r.date}</span>
-      <span class="log-emoji">${MOODS[r.mood]}</span>
-      <span class="log-mood-lbl">${LABELS[r.mood]}</span>
-      <span class="log-note">${r.note||''}</span>
-      ${r.isPublic?'<span class="log-pub">公開</span>':''}
-      <button class="del-btn" onclick="deleteRecord('${r.date}')" aria-label="刪除">×</button>
+    <div class="log-row" onclick="toggleLog(this)">
+      <div class="log-main">
+        <span class="log-date">${String(r.date).slice(5)}</span>
+        <span class="log-emoji">${MOODS[r.mood]}</span>
+        <span class="log-note-preview">${r.note || ''}</span>
+        ${r.isPublic?'<span class="log-pub">公開</span>':''}
+        ${r.note?'<span class="log-expand">⌄</span>':''}
+        <button class="del-btn" onclick="event.stopPropagation();deleteRecord('${r.date}')" aria-label="刪除">×</button>
+      </div>
+      ${r.note?`<div class="log-detail">${r.note}</div>`:''}
     </div>`).join('');
+}
+
+function toggleLog(row) {
+  row.classList.toggle('open');
+  const arrow = row.querySelector('.log-expand');
+  if (arrow) arrow.textContent = row.classList.contains('open') ? '⌃' : '⌄';
 }
 
 function deleteRecord(date) {
