@@ -176,10 +176,9 @@
     <div class="card">
       <div class="tabs">
         <button class="tab-btn active" id="tab-fortune"  onclick="switchTab('fortune')">每日好運</button>
+        <button class="tab-btn"        id="tab-bulletin" onclick="switchTab('bulletin')">佈告欄</button>
         <button class="tab-btn"        id="tab-record"   onclick="switchTab('record')">記錄心情</button>
         <button class="tab-btn"        id="tab-team"     onclick="switchTab('team')">大家的心情</button>
-        <button class="tab-btn"        id="tab-bulletin" onclick="switchTab('bulletin')">佈告欄</button>
-        <button class="tab-btn"        id="tab-log"      onclick="switchTab('log')">我的紀錄</button>
       </div>
 
       <!-- 每日好運 -->
@@ -218,6 +217,13 @@
         </label>
         <button class="save-btn" id="save-btn" onclick="saveRecord()">儲存今天的心情</button>
         <div class="save-msg" id="save-msg"></div>
+        <div style="border-top:0.5px solid var(--border);margin-top:20px;padding-top:16px;">
+          <div class="stats-grid" id="stats-row"></div>
+          <p class="section-head">本月每日心情</p>
+          <div class="bar-chart-wrap"><div class="bar-chart" id="bar-chart"></div></div>
+          <p class="section-head" style="margin-top:20px;">歷史紀錄</p>
+          <div id="log-list"><div class="loading-hint">載入中...</div></div>
+        </div>
       </div>
 
       <!-- 大家的心情 -->
@@ -231,14 +237,7 @@
         <div id="bulletin-list"><div class="loading-hint">載入中...</div></div>
       </div>
 
-      <!-- 我的紀錄 -->
-      <div class="view" id="view-log">
-        <div class="stats-grid" id="stats-row"></div>
-        <p class="section-head">本月每日心情</p>
-        <div class="bar-chart-wrap"><div class="bar-chart" id="bar-chart"></div></div>
-        <p class="section-head" style="margin-top:20px;">歷史紀錄</p>
-        <div id="log-list"><div class="loading-hint">載入中...</div></div>
-      </div>
+
     </div>
   </div>
 </div>
@@ -357,7 +356,7 @@ function fetchMyMoods() {
     .then(data => {
       myRecords = data.records || [];
       renderTodayState();
-      if (document.getElementById('view-log').classList.contains('active')) renderLog();
+      renderLog();
     })
     .catch(() => { myRecords = []; });
 }
@@ -525,12 +524,12 @@ function drawFortune() {
 }
 
 function switchTab(name) {
-  ['fortune','record','team','bulletin','log'].forEach(t => {
+  ['fortune','bulletin','record','team'].forEach(t => {
     document.getElementById('view-'+t).classList.toggle('active', t===name);
     document.getElementById('tab-'+t).classList.toggle('active', t===name);
   });
   if (name==='team') fetchTeam();
-  if (name==='log')  renderLog();
+  if (name==='record') renderLog();
 }
 
 const d = new Date();
