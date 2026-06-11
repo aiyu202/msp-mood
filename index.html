@@ -450,11 +450,12 @@ function renderTeam() {
   const publicRecs = teamRecords.filter(r => r.isPublic);
   if (!publicRecs.length) { el.innerHTML = '<div class="empty-hint">還沒有人公開心情，你來第一個！</div>'; return; }
   el.innerHTML = publicRecs.map(r => {
-    const c = avatarColor(r.nickname);
+    const name = String(r.nickname);
+    const c = avatarColor(name);
     return `<div class="team-row">
-      <div class="avatar" style="background:${c.bg};color:${c.text}">${r.nickname.slice(0,1)}</div>
+      <div class="avatar" style="background:${c.bg};color:${c.text}">${name.slice(0,1)}</div>
       <div style="flex:1;min-width:0">
-        <div class="team-name">${r.nickname}</div>
+        <div class="team-name">${name}</div>
         ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
       </div>
       <div style="text-align:right;flex-shrink:0">
