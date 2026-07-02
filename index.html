@@ -145,7 +145,12 @@
   .del-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:16px; padding:2px 4px; border-radius:4px; font-family:inherit; flex-shrink:0; }
   .del-btn:hover { color:var(--text2); background:var(--bg2); }
 
-  .empty-hint { color:var(--text3); font-size:13px; text-align:center; padding:28px 0; }
+  /* 反應 */
+  .reaction-bar { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .reaction-btn { background:var(--bg2); border:0.5px solid var(--border); border-radius:20px; padding:4px 10px; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:4px; font-family:inherit; transition:background 0.15s, border-color 0.15s; }
+  .reaction-btn:hover { border-color:var(--border2); background:var(--bg3); }
+  .reaction-btn.reacted { background:var(--p50); border-color:var(--p200); }
+  .reaction-count { font-size:11px; color:var(--text2); }
   .loading-hint { color:var(--text3); font-size:12px; text-align:center; padding:20px 0; }
   .section-head { font-size:13px; font-weight:500; margin-bottom:12px; }
   .hidden { display:none !important; }
@@ -449,21 +454,64 @@ function renderTeam() {
   const el = document.getElementById('team-list');
   const publicRecs = teamRecords.filter(r => r.isPublic);
   if (!publicRecs.length) { el.innerHTML = '<div class="empty-hint">還沒有人公開心情，你來第一個！</div>'; return; }
-  el.innerHTML = publicRecs.map(r => {
+  const REACTION_EMOJIS = ['👍','👌','😢','💪','😂','🫂','🔥'];
+  el.innerHTML = publicRecs.map((r, idx) => {
     const name = String(r.nickname);
     const c = avatarColor(name);
-    return `<div class="team-row">
+    const reactions = r.reactions || {};
+    const reactionHtml = REACTION_EMOJIS.map(emoji => {
+      const names = reactions[emoji] || [];
+      const count = names.length;
+      const isMine = names.map(String).includes(String(nickname));
+      return `<button class="reaction-btn${isMine?' reacted':''}"
+        onclick="toggleReaction(${idx}, '${emoji}')"
+        title="${names.join(', ')||''}">
+        ${emoji}${count > 0 ? `<span class="reaction-count">${count}</span>` : ''}
+      </button>`;
+    }).join('');
+    return `<div class="team-row" id="team-row-${idx}">
       <div class="avatar" style="background:${c.bg};color:${c.text}">${name.slice(0,1)}</div>
       <div style="flex:1;min-width:0">
         <div class="team-name">${name}</div>
         ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
+        <div class="reaction-bar">${reactionHtml}</div>
       </div>
-      <div style="text-align:right;flex-shrink:0">
+      <div style="text-align:right;flex-shrink:0;margin-left:8px">
         <div class="team-emoji-big">${MOODS[r.mood]}</div>
         <div style="font-size:10px;color:var(--text3);margin-top:2px">${String(r.date).slice(5)}</div>
       </div>
     </div>`;
   }).join('');
+}
+
+function toggleReaction(idx, emoji) {
+  const r = teamRecords.filter(r => r.isPublic)[idx];
+  if (!r) return;
+  const reactions = r.reactions || {};
+  const names = (reactions[emoji] || []).map(String);
+  const isMine = names.includes(String(nickname));
+  const newEmoji = isMine ? '' : emoji; // 已按過就取消
+
+  fetch(API, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'saveReaction',
+      nickname,
+      targetNickname: r.nickname,
+      targetDate: r.date,
+      emoji: newEmoji
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      // 更新本地資料再重新渲染
+      const publicIdx = teamRecords.filter(r => r.isPublic).indexOf(r);
+      r.reactions = data.reactions;
+      renderTeam();
+    }
+  })
+  .catch(() => {});
 }
 
 function fmtDate(val) {
