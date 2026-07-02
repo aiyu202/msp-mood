@@ -156,6 +156,7 @@
   .reaction-picker { position:absolute; bottom:34px; left:0; background:var(--bg); border:0.5px solid var(--border2); border-radius:24px; padding:6px 10px; display:flex; gap:6px; box-shadow:0 4px 16px rgba(0,0,0,0.12); z-index:10; white-space:nowrap; }
   .reaction-picker button { background:none; border:none; font-size:20px; cursor:pointer; padding:2px; border-radius:50%; transition:transform 0.1s; font-family:inherit; }
   .reaction-picker button:hover { transform:scale(1.3); }
+  .group-label { font-size:11px; font-weight:500; color:var(--text3); letter-spacing:0.05em; padding:12px 0 4px; margin-bottom:2px; }
   .loading-hint { color:var(--text3); font-size:12px; text-align:center; padding:20px 0; }
   .section-head { font-size:13px; font-weight:500; margin-bottom:12px; }
   .hidden { display:none !important; }
@@ -455,30 +456,53 @@ function renderTodayState() {
   document.getElementById('save-btn').textContent = '更新今天的心情';
 }
 
-const REACTION_EMOJIS = ['👍','👌','😢','💪','😂','🫂','🔥'];
+const REACTION_EMOJIS = ['❤️','👍','👌','😢','💪','😂','⭕','❌','🌙'];
+
+function getDateGroup(dateStr) {
+  const today = getTodayKey();
+  const d = new Date(dateStr);
+  const t = new Date(today);
+  const diffDays = Math.floor((t - d) / (1000*60*60*24));
+  if (dateStr === today) return '今天';
+  if (diffDays <= 6) return '本週';
+  return '更早';
+}
 
 function renderTeam() {
   const el = document.getElementById('team-list');
   const publicRecs = teamRecords.filter(r => r.isPublic);
   if (!publicRecs.length) { el.innerHTML = '<div class="empty-hint">還沒有人公開心情，你來第一個！</div>'; return; }
-  el.innerHTML = publicRecs.map((r, idx) => {
-    const name = String(r.nickname);
-    const c = avatarColor(name);
-    return `<div class="team-row" id="team-row-${idx}">
-      <div class="avatar" style="background:${c.bg};color:${c.text}">${name.slice(0,1)}</div>
-      <div style="flex:1;min-width:0">
-        <div class="team-name">${name}</div>
-        ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
-        <div class="reaction-area" id="reactions-${idx}">
-          ${renderReactionPills(r, idx)}
+
+  const groups = { '今天':[], '本週':[], '更早':[] };
+  publicRecs.forEach((r, idx) => {
+    const g = getDateGroup(String(r.date));
+    groups[g].push({ r, idx });
+  });
+
+  let html = '';
+  ['今天','本週','更早'].forEach(group => {
+    if (!groups[group].length) return;
+    html += `<div class="group-label">${group}</div>`;
+    html += groups[group].map(({r, idx}) => {
+      const name = String(r.nickname);
+      const c = avatarColor(name);
+      return `<div class="team-row" id="team-row-${idx}">
+        <div class="avatar" style="background:${c.bg};color:${c.text}">${name.slice(0,1)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="team-name">${name}</div>
+          ${r.note ? `<div class="team-note">${r.note}</div>` : ''}
+          <div class="reaction-area" id="reactions-${idx}">
+            ${renderReactionPills(r, idx)}
+          </div>
         </div>
-      </div>
-      <div style="text-align:right;flex-shrink:0;margin-left:8px">
-        <div class="team-emoji-big">${MOODS[r.mood]}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px">${String(r.date).slice(5)}</div>
-      </div>
-    </div>`;
-  }).join('');
+        <div style="text-align:right;flex-shrink:0;margin-left:8px">
+          <div class="team-emoji-big">${MOODS[r.mood]}</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:2px">${String(r.date).slice(5)}</div>
+        </div>
+      </div>`;
+    }).join('');
+  });
+  el.innerHTML = html;
 }
 
 function renderReactionPills(r, idx) {
